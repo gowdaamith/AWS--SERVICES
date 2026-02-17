@@ -1,0 +1,205 @@
+AWS  Ec2
+---------
+
+Ec2 is a service provided by the AWS , that gives you virtual machines (server) in the cloud
+These server's can run linux ,windows,containers,databases,applications and anything you want exactly like your computer
+
+
+Why Ec2 exits:??
+Before Ec2 ,companies  bought physical servers ,installed OS ,managed cooling ,networking 
+and hardware failure 
+
+But After the intruduction of cloud service : Everything will be managed by the Cloud 
+according to our configuration and we have to pay for the services they offer 
+
+Ec2 gives : 
+*Compute -> CPU,RAM
+*Storage -> EBS ,Instance Store
+*Networking -> VPC , ENI
+*Security -> Security Group 
+*Elasticity -> Autoscaling 
+
+How the Ec2 Works Internally :
+------------------------------
+When you launch  an Ec2 instance 
+1.You choose an AMI -> This defines  the OS and pre-installed software 
+   Example: Amazon Linux, Windows, Ubuntu, RHEL.
+2.You choose  an instance type -> define CPU ,RAM, network speed 
+  Examples : 
+     t3.micro → small, burstable
+     m5.large → general purpose
+     c6g.xlarge → compute optimized
+     g5.xlarge → GPU instance
+3.YOu choose networking -> VPC ,subnets ,IP's
+4.You set Security      -> Security Group 
+5.AWS allocates a virtual machine on its physical server using :
+   * Nitro Hypervisor
+   * Nitro Hardware Cards
+
+This gives you : 
+* Near bare-metal performance
+* Extreme isolation 
+* Low overhead 
+
+Ec2 Architecture : 
+
+                        ┌────────────────────────┐
+                        │       AWS Region       │
+                        └─────────┬──────────────┘
+                                  │
+                    ┌─────────────┴───────────────┐
+                    │       Availability Zones     │
+                    └─────────────┬───────────────┘
+                                  │
+                     ┌────────────┴─────────────┐
+                     │       VPC Network        │
+                     └────────────┬─────────────┘
+                                  │
+                      ┌───────────┴────────────┐
+                      │        Subnets          │
+                      └───────────┬────────────┘
+                                  │
+                  ┌──────────────┴────────────────┐
+                  │       EC2 Instance             │
+                  │  - OS (from AMI)               │
+                  │  - Instance Type               │
+                  │  - EBS Volumes                 │
+                  │  - Security Groups             │
+                  └───────────────────────────────┘
+
+Key Components of Ec2 Explained : 
+----------------------------------
+
+1.AMI [ AMAZON MACHINE IMAGE]
+------------------------------------
+BluePrint of your Server .
+Contains:
+*OS (Linux/Windows)
+*Software
+*Configuration 
+
+Type of AMI:
+*AWS managed
+*MarketPlace(Paid)
+*Custom AMI's (Golden images)
+
+2.Instance types
+--------------------------------------
+Different machines for differenc workloads:
+
+Family                       Use cases
+
+t-series                     burstabel,cheap
+m-series                     general purpose
+c-series                     compute heavy apps
+r-series                     memory heavy 
+p/g series                   GPU + AI
+i-series                     high IOPS storage 
+
+3.Ec2 Storage
+------------------------------------------
+a).Elastic Block Storage
+--------------------------
+*Persistent storage
+*Survives instance temination 
+
+b).Instance store
+--------------------------
+*Fast local NVMe
+*Data lost when instance stops 
+*Used for caching ,temporary storage
+
+4.Networking
+---------------------------------------------
+Ec2 gets an interface called ENI (Elastic Network Interface)
+
+YOu can assign : 
+*Public IP 
+*Private IP
+*Elastic IP (Static Public IP)
+
+5.Security 
+---------------------------------------------
+Two layers
+
+Security Groups 
+*Acts like a virtual firewall
+*Controls inbound/outbound traffic 
+*Stateful
+
+Network ACLs (NACL)
+*Subnet-levell firewall
+*Statelesss
+
+6.Ec2 Priciing 
+---------------------------------------------
+1.On Demand 
+*Pay per second 
+*Flexible 
+*Most expensive
+
+2.Spot instances 
+*Up to 90% cheaper 
+*AWS may terminate any time -> great for batch jobs [Tasks that runs once ,processes a set of data,completes and Stops ,not running a server or application ]
+
+3.Reserved Instances 
+* 1 or 3 year commitment 
+* Big discounts (~72%)
+
+4.Saving Plans
+*Commitment to spend 
+*Applies to any instances
+
+Advanced  Ec2 Concepts you must Know :
+---------------------------------------
+
+Elastic Load Balancer(ELB)
+-----------------------------
+Distribute the traffic acrosss the Ec2 
+
+AutoScaling Group 
+------------------------------
+Automatically :
+*Adds more instances during high load
+*Removes the instances during the low load 
+
+Placement Groups
+-------------------------------
+Placement Groups Allow you to control the physical placement of the Ec2 machines 
+*Cluster -> Low latency ,HPC 
+*Spread -> High availability
+*Partition -> Hadoop Kafka ,Cassandra
+
+Elastic Fabric Adapter 
+---------------------------------
+Used in HPC and ML training 
+
+Region and AZ architecture 
+____________________________________________________________________
+Each AWS region contains multiple Availability Zones 
+
+Ex: ap-south-1(Mumbai region)
+*ap-south-1a
+*ap-south-1b
+*ap-south1c
+
+Each instance live inside one AZ ,not across them 
+
+
+When to use the Ec2 :
+
+| Use case                              | Should you use EC2? |
+| ------------------------------------- | ------------------- |
+| Running microservices                 | ❌ Use ECS/EKS       |
+| Hosting static website                | ❌ Use S3            |
+| Running databases                     | ❌ Use RDS/DynamoDB  |
+| Custom application servers            | ✅ EC2               |
+| Big CPU jobs                          | ✅ EC2 (C-series)    |
+| GPU training                          | ✅ EC2 (G/P series)  |
+| Legacy apps requiring OS-level access | ✅ EC2               |
+
+
+
+
+
+
