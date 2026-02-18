@@ -1,4 +1,4 @@
-The options you come across while launching an Instance:
+sThe options you come across while launching an Instance:
 
 1.Names and Tags
 -----------------------------------------------
@@ -467,4 +467,84 @@ Leave default
 21.Nitro Enclave 
 -------------------------------------------------------
 Runs isolated secure enclaves[ super secure mini-computers ] inside an Ec2 instances
-Used fpr handling sensitive data: 
+Used for : Handling sensitive data
+           PCI workload
+           encccrypted transaction 
+
+22.User data (base64 encoded)
+----------------------------------------------------------
+User data runs scripts at boot
+*Shell script
+*cloud init
+*Powershell command for the windows
+
+AWS console encodes it automatically in Base64.
+
+Ezmaple:
+#!/bin/bash
+yum update -y
+yum install httpd -y
+systemctl start httpd
+
+23.License configuration 
+----------------------------------------------------------
+This setting lets you attach  software licencing rules to your Ec2 instance
+AWS licence manager help companies manage costly liceses like:  
+
+Microsoft Windows Server
+SQL Server
+Oracle Database
+SAP
+Red Hat Enterprise Linux
+SUSE
+
+Why is this useful??
+1.Cost control
+Avoid overusing expensive  licenses  (SQL Server license costs thousands).
+2.Compliance
+ensure every Ec2  instance follow licensing policies 
+(prevent legal issues and audit)
+3.Automated tracking 
+Counts how maany licenses  each Ec2 is using 
+4.BYOL (Bring your own license
+Companies who own  software  licenses can  apply them to AWS 
+
+Example
+Your company has 20 SQL Server licenses.
+
+➡ AWS License Manager blocks you from launching EC2 with SQL Server once you reach the limit
+➡ Prevents accidental overspending
+
+24.Nested Virtualization
+--------------------------------------------------------------------------
+Nested virtualization means :
+>> YOu can run a hypervisor inside your Ec2
+>> That hypervisor  can run  virtual  machines inside your  Ec2 
+
+EC2 → Hypervisor → Your own VMs
+
+
+Supported instance types
+Only metal instances (bare metal):
+
+*i3.metal
+*m5.metal
+*c5.metal
+*r5.metal
+*c6.metal (newer)
+
+Because they give you direct access to hardware.
+
+Used for: 
+*Running VMware labs
+*Migrating on prem VM-ware to AWS
+*Security testing 
+*Network simulation 
+*Building your own cloud platform 
+
+CPU Options:
+--------------------------------------------------------------------------
+This lets you configure how many vCPU' and how many threads per core your Ec2.
+
+You can modify : 
+1.Number of vCPU'S
