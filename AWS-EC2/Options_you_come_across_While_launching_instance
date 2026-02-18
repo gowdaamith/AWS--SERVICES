@@ -119,10 +119,352 @@ If you choose  AWS managed Microsoft AD
                             |                                       and adds the DNS service on your behalf.]
                             |_ Extend the existing AD domain with hybrid directory  [ Extend your self-managed AD domain into AWS, 
                                                                                        creating a single AD domain across cloud and your AD environments.]
-  if you choose the first  the second option : 
+  if you choose the  the second option : 
           Create directory assessment: 
-          Specify : Self managed Active directory information 
-                     Networking 
-                     AWS system manager  managed nodes 
+          Specify : Self managed Active directory information  [ Enter the networking details to asseess your  self managed Active directory ]
+                     Networking                         [ The VPC that contains your directory  ]
+                     AWS system manager  managed nodes  [ Select 2 managed nodes representing  your self-managed AD domain controller for resiliency ]
+         Review and Create the directory 
 
-             
+if you choose the  first option :
+          Enter the directory information :
+              Such as : 
+                   Edition : Standard edition or Enterprise edition
+                   Directory DNS name
+                   Directory NetBIOS name - optional
+                   Directory  description 
+                   Admin password [ The password for the default administrative user named admin ]
+                   Confirm password 
+          Choose the VPC and the Subnet
+           Review and create 
+
+This allows for the centralized user management 
+Group policies 
+Login using Domain credentials 
+
+2. IAM Instance Profile
+------------------------------------------------
+*Attaches an IAM role to the Ec2 instance 
+*Which allows you Ec2 to access
+ - S3
+   Dynamo DB
+   CloudWatch 
+   SSM(AWS System Manager)
+and the other services without needing access key 
+
+3.Hostname type and DNS HostName type 
+--------------------------------------------------
+Will be managed by the AWS itself 
+* AWS automatically generate the hostname -> ip-10-0-0-25.ec2.internal
+* DNS hostname options :
+     These checkboxes  control the DNS records(A/AAA) created for your Ec2
+>> Enable IP name IPv4 (A record) DNS request  
+   Instance -> IPv4 -> DNS name 
+   10.0.1.25 → ip-10-0-1-25.ec2.internal
+This is the default private DNS hostname
+Nearly all Ec2 need this -> so it is on by default 
+
+>> Enable resource-based IPv4 ( A record) DNS requests
+   This means your Ec2 instances can also use resource-based names like:
+   i-0abcd1234efgh5678.ec2.internal
+So instead of the IP-based name ,AWS creates a DNS name baed on instance ID
+This is helpfull because if the IP changes ,the resource based DNS name still work
+Other AWS services (ALB,SSM,NAT,etc) can refference your instance directly 
+
+>> Enable resource-based IPv6 (AAAA record ) DNS request 
+   This is disabeled because
+   *Your VPC or instances probably does not have IPv6 enabled
+   *If you don't assign IPv6 ,you cannot create AAAA DNS record 
+
+When enabled ,it would create DNS like 
+i-0abcd1234efgh5678.ec2.internal → AAAA → IPv6 address
+
+4.Instance Auto-Recovery [ Self healing of the hardware issue ,not creating new server = lift and shift ]
+----------------------------------------------------------
+Automatically recovers  the instance  if hardware  failure happens 
+Means :
+When the underlying physical host fails,AWS will move your Ec2 instance to healthy
+hardware and restart it 
+
+It  is the same instance :
+*Public IP , Private IP , Elastic IP, Storage , Same Data
+AWS basically "lift and shifts" server to a new physical machine 
+
+This will not take place when : 
+*OS crashes 
+*If your application fails 
+*If you shutdown the instance
+
+When Auto-Recovery will trigger :
+*CPU board failure
+*Memory failure 
+*Network card failure
+*Hypervisor failure
+*Power failure on host 
+
+6.shutdown Behaviour 
+-----------------------------------------------------------
+It decides  what AWS should do when the operating system inside your Ec2 instance performs 
+a shutdown 
+
+For ex: 
+>> sudo shutdown now
+When you run this AWS will applies the setting :
+either the 
+               *  Stop 
+               *  Terminate 
+
+7.Stop-Hibernate Behaviour 
+---------------------------------------------------------
+When stopping the instance ,OS RAM will be saved to the disk 
+
+Use cases: 
+* Application that takes long time to initialize
+* Instances that maintain in memory  state 
+
+Require : 
+*EBS backed instance
+*Enough EBS size to store RAM 
+
+8.Termination Protection 
+----------------------------------------------------------
+if enabeled ,the instance  can't be terminated usng the console ,API or CLI until 
+termination  protection is disabled if no value is specified the value ofthe source 
+template will be used , if the template value is not specified then the default API 
+value  will be used 
+
+
+9.Stop Protection 
+--------------------------------------------------------
+You can protect the instance from being accidentally stopped .Once enabled  you won't 
+be able to stop this  instance via the API or the AWS management console until stop 
+protection has been disabled 
+
+10 . Detailed CloudWatch Monitoring 
+------------------------------------------------------
+Ec2 publishes  metrics  to CloudWatch every 5 minutes 
+If you enable this option   the metric's will be sent to the CloudWatch every 1 minute 
+
+Use this : 
+If you want fast autoscaling 
+You need detailed performace metrics
+Extra charges will apply 
+
+11. Credit specification 
+--------------------------------------------------------
+T-series instance are burstable instances  
+*They run at low CPU most of the time     = Wher these instance earn CPU credit 
+*They can burst to high CPU when needed   = Wher these instances speds CPU credits when it burts
+When the credits becomes zero the instance will be throttled 
+
+Here we will come across two option : 
+Limited   ->   just use what you have earned when the cpu is idel and  slow  down when the credit become Zero 
+Unlimited ->   instance can burst even when credits reach zero 
+
+12. Placement Group 
+--------------------------------------------------------
+While creating Placement group you will have to follow these steps 
+Step 1: Create a Placement Group
+Step 2: Give it a name 
+Step 3: Placement Strategy : Determines how the  instances are placed on the underlying  hardware 
+         Choose Optoins like: 
+         \_ Cluster
+         \_ Spread    -> Select the spread level  -> choose either the Rack or Host 
+         \_ Partition  ->  Select the Number of partitions  to be created in this placement group
+
+Cluster Placement Group
+>> AWS places all your Ec2 instances very close to each other  - Possilby on the same rack or the adjoining rack 
+   Which provide 
+  * Low network latency 
+  * high network throughput 
+  * Best for high performance computing 
+  * Fast communication between the machine 
+
+if something happens in that rack or on one network All instances may fail together ( Low fault tolerance)
+
+Spread Placement Group
+>> AWS places each instances in differenct racks with different power sources 
+   Which provide 
+   * Maximum fault tolerance
+   * Each instance is isolated
+   * No two instances share same hardware 
+
+Used for: 
+No high-speed networking performance
+You can place max 7 instances per AZ
+
+Partition Placement Group 
+>> 
+AWS divides your instances into partition ,each partition has:
+*Different  racks
+*Different  network
+*Differenct power 
+Inside the partition -> Machine may share the hardware 
+Between the  partition  -> No shared hardware 
+
+
+Which provide us with: 
+*Very high fault tolerance
+*Used for Big Data  systems
+*Prevents data replication on same rack 
+
+13.EBS-optimized Instance
+-----------------------------------------------------
+Enables additional ,dedicatted  throughPut between AMAZON  Ec2  AMAZON  EbS .Supported 
+on cretain instance type only . Specifying an incompatible instance type will fail the 
+instance launch
+
+14.Instance bandwidth configuration 
+-------------------------------------------------------
+Allows you to override the default network bandwidth  (Supported in some instances)
+
+Used when: 
+*YOu need higher / lover bandwidth 
+*You want predictabel burst behaviour 
+
+15.Purchasing Option
+------------------------------------------------------
+Purchasing Options = How you want to pay for the Ec2 instance  and how AWS provide the capacity for you
+There are 4 main options: 
+1.None (On - Demand  -default)
+2.Capacity Block 
+3.Interruptible capacity block 
+4.Spot instance
+
+None : (On-Demand Instance)
+This is the default 
+*Pay per hour / second 
+*No commitment 
+*AWS gives you capacity  based on best effort
+*Most flexible
+*Most expensive
+
+2.Capacity Blocks 
+Thisis for high  performance  computing workload
+*Buy a guaranteed Ec2 capacity for fixed time window 
+*Exmaple: "I want 100 CPU hours between 10AM - 4PM on tuesday 
+*You are guarenteededdddd to get those instances in the window
+*Used for big research or simulation Jobs 
+
+Not used by normal companies 
+
+3.Interruptabel Capacity Reservation 
+This means :
+*YOu reserve Ec2 capacity 
+*But AWs can take it away if needed
+*You get discounts compared to normal reservation 
+*Not as reliable  as Spot Instances
+
+4.Spot instance 
+This is one of the most important section 
+
+Spot = spare  AWS capacity  sold at 70-90 discouts 
+*Very cheap
+*Same performance as On-Demand 
+*Not Good for long-ruuning apps
+*Can be interrupted at anytime 
+
+YOu can customize the spot instance optoin like: 
+MAXIMUM PRICE: Two_Choices
+               \_ No maximum price [Request Spot Instances at the Spot price, capped at the On-Demand price]
+                \_Set your maximum price (per instance /hour)
+Request type: Two_Types
+             \_One_time : AWS tries to lauch once .If the spot capacity is not available  -> request stops
+              \_Persistent : if spot instances  get interrupted - AWS will automatically  retry lauching again ,useful for long bacth jobs 
+Valid To: 
+How long the spot instance request will be active:
+*Default = NO expiry 
+*YOu can set the data and time
+
+Interruption behavviour 
+What happens when the AWS need the capacity back ??
+1.Stop
+2.Hibernate 
+3.Terminate 
+
+16.Capacity Reservation 
+-----------------------------------------------------------
+CR means  AWS guaranteeing  that EC2 capacity will be availabel for you even when the region is busy 
+Think of it like a  "boking the seats "in advance
+
+1.Select
+This just means : 
+* AWS will automatically choose the best option 
+* YOu don't force capacity reservation 
+* You don't avoid it 
+
+2.Open
+Meaning: 
+*Launch this instance in any existing capacity reservation 
+* As long as the reservation matches instance type ,AZ and tenancy 
+
+3.None:
+Meaning: 
+*Do not use any Capacity reservation 
+*Treat this instance as normal On-Demand
+
+This is the default for 99% of users 
+
+4.Specify Capacity Reservation 
+You already created a reservation earlier (manually)
+Now you are telling the AWS
+>> Launch this instance inside that specific reservation 
+You must choose the reservatin ID
+Used in large enterpriser for the production workload
+
+5.Specify Capacity Reservation Resource Group 
+A capacity reservation resource group contains mutliple capacitye reservation 
+With this option,you tell the AWS :
+“Launch this instance in ANY reservation inside this reservation group.”
+Why is this useful?
+
+Because companies create resource groups like:
+
+*prod-east-app-group
+*prod-east-database-group
+*backup-cluster-group
+
+Instead of selecting a single reservation, you target the group.
+AWS will choose the best reservation from that group automatically.
+
+7.Only Launch in a capacity reservation group
+Similar to abouve ,but
+ AWS must find a reservation inside the selected group
+If not found, instance launch FAILS
+
+| Option                               | Meaning                       | When Used                |
+| ------------------------------------ | ----------------------------- | ------------------------ |
+| **Select**                           | Let AWS decide                | Most users               |
+| **Open**                             | Use any matching reservation  | Flexible enterprises     |
+| **None**                             | Normal On-Demand              | Default                  |
+| **Specify Reservation**              | Use exact reservation         | Strict control           |
+| **Specify Resource Group**           | Use reservations inside group | Organized enterprises    |
+| **Only launch in Reservation**       | Fail launch if no reservation | Critical apps            |
+| **Only launch in Reservation Group** | Even stricter version         | Compliance/SLA workloads |
+
+17.Tenancy
+-------------------------------------------------------
+Select the physical host  your instance runs on : 
+Type: 
+*Default : Shared hardware
+*Dedicated Host: Entire  physical server for you only 
+*Dedicated Instances: Runs on dedicated  hardware  but shared host 
+
+18.Ram Disks
+-------------------------------------------------------
+Legacy options for the custom ram disks
+Used for: 
+*Ec2-classic era AMI
+*Special boot environment 
+YOu normally leave it as selecte
+
+20.Kernal ID 
+--------------------------------------------------------
+Used for the custom linux kernal 
+Deprecated 
+Leave default
+
+21.Nitro Enclave 
+-------------------------------------------------------
+Runs isolated secure enclaves[ super secure mini-computers ] inside an Ec2 instances
+Used fpr handling sensitive data: 
