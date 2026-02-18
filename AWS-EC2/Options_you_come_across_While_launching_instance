@@ -1,0 +1,128 @@
+The options you come across while launching an Instance:
+
+1.Names and Tags
+-----------------------------------------------
+Name : This is only a label for identification .
+       AWS stores it as  a key:value pair with Name as key and value as the instance  name 
+
+
+Add Additional Tags : 
+Tags : metadata attached to an instance 
+
+Ex: 
+*Environment: Dev/Test/Prod
+*Owner =Amith
+*Project = MicroServices
+
+These Help in :  Biling ,Automation ,IAM permission, Organization 
+
+2.Application and OS Images (Amazon Machine Image)
+---------------------------------------------------
+You can select a already existing AMI or create a new one :
+
+AMI defines : 
+*Operating system 
+*Default user
+*Preinstalled libraries
+*Root volume type(EBS)
+*Virtualization: HVM 
+
+The AMI ID is specific to region 
+If you change region -> AMI ID changes 
+
+3.Instance types 
+---------------------------------------------------
+Instance type defines :
+*CPU core
+*RAM
+*Network Bandwidth 
+*EBS throughPut 
+*Costs
+
+4.Key Pair(Login)
+----------------------------------------------------
+This Key: 
+*Contains private key (.pem) stored in your laptop 
+*AWS  stores the public  key on the instance
+*You ssh using:
+
+>> ssh -i amithtest.pem ubuntu@public_ec2_ip
+
+If you loose the ".pem" key you cannot SSH unless
+*YOu use SSM session manager
+*You attach  a new key manually 
+
+5.Network Setting
+---------------------------------------------------
+VPC : You can choose the VPC of your choice or You can use the default VPC
+
+It defines: 
+*CIDR range 
+*Subnets 
+*Routing 
+*Security 
+
+Subnet: You  can create a subnet inside you VPC   and use it or If you choose a default you will use the default Subnet choosen by the AWS
+
+Auto Assign Public IP: 
+Enable 
+
+
+This decides: 
+| Setting | Meaning                               |
+| ------- | ------------------------------------- |
+| Enable  | Instance gets public IP → you can SSH |
+| Disable | No public IP → Only private network   |
+
+Best practice:
+Public IP ONLY for bastion or NAT
+Others → private only
+
+6.Security Group (Acts as the firewall of the instances)
+-------------------------------------------------------------
+You can select the default one or create a new one and use it 
+
+Security Group Control:
+*Control Inbound
+*Control Outbound
+*Stateful -> reply traffic automatically allowed
+
+7.Configure the Storage
+--------------------------------------------------------------
+
+You can select the amount of storage you want:
+Important: 
+This is the root volume ,meaning OS installed here 
+
+Advanced Details:
+
+1.Domain Join Directory :
+  This setting allows your Ec2 instaces  to automatically join  a directory service when it boots
+
+  If you don't have a one you can create one by following  the below steps:
+  *Step 1: Click on the Create New Directory 
+   Step 2: Select the directory types: - AWS managed MicroSoft AD  [With AWS Managed Microsoft AD, you can easily enable your Active Directory-aware workloads and AWS resources to use managed actual Microsoft Active Directory in the AWS Cloud. 
+                                                                    Workload examples include Amazon EC2, Amazon RDS for SQL Server, custom .NET applications, and AWS Enterprise IT applications such as Amazon WorkSpaces.
+                                       |_ AD connectors            [ AD  Connectors is a proxy for redirecting directory requests to your existing Microsoft Active Directory without caching any information in the cloud. 
+                                                                     AD Connector comes in two sizes, small and large. A small AD Connector is designed for small organizations and is intended to handle a low number of operations per second.
+                                                                     A large AD Connector is designed for large organizations and is intended to handle a moderate to high number of operations per second
+  If you choose the  AD connector name:  
+     Step 1: Directory size : AD connectors is available in the following two sizes ,small and large 
+     Step 2: Choose the VPC and Subnet [The VPC contains your directory ]
+     Step 3: Next specify the Active directory information 
+     Step 4: Review and create
+
+
+If you choose  AWS managed Microsoft AD 
+     Step 1: Choose either  - Create a new AWS managed AD domain [ Create a fully-managed Microsoft AD in the AWS Cloud.
+                            |                                       AWS Directory Service creates two domain controllers 
+                            |                                       and adds the DNS service on your behalf.]
+                            |_ Extend the existing AD domain with hybrid directory  [ Extend your self-managed AD domain into AWS, 
+                                                                                       creating a single AD domain across cloud and your AD environments.]
+  if you choose the first  the second option : 
+          Create directory assessment: 
+          Specify : Self managed Active directory information 
+                     Networking 
+                     AWS system manager  managed nodes 
+
+             
