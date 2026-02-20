@@ -1,0 +1,100 @@
+What is an AMI???
+An AMI (Amazon Machine Image) is a SNAPSHOT of the currnet state of the
+root volume of the instance  used to create a template which can be used 
+to launch the template
+
+It contians everything required for booting an OS and running application 
+
+When you create an AMI from an existing  EC2 instance  -What exactly does it include??
+>> When you click "Create Image (AMI) from an instance ,AWS takes a snapshot-level 
+   copy  of the instance's boot  volume  and some metadata
+
+The complete ,deep breakdown is here
+
+Root volume Snapshot(EBS snapshot)
+
+1.Root Volume Snapshot 
+This is the most important part
+It contains:
+*Operating system  - Kernel 
+*OS configuration 
+ \_Installed packages
+ \_Updates and patches
+ \_Kernel version 
+ \_System configuration
+* FileSystem state
+2.Everything inside the root filesystem: 
+/home
+/etc
+/opt
+/var
+3.Application Code
+Any code you installed manually 
+ - Node.js apps
+ - Python apps
+ - Java apps
+ - Web Servers
+ - Databases
+4.Application configurations
+ - Environment files
+ - Systemd service files
+ - Config files under /etc/...
+ - Window registry entries realated to installed apps
+
+In simple what ever exits on the root disk - Included
+
+2.Additional Attached Volumes 
+When creating AMI ,AWS asks:
+   ADD volume >>  one will be default selected and  we can add other Volume 
+   which can be   included in the creation of the image 
+
+This will Contain:
+*Snapshots of all included EBS volumes
+*Volume size 
+*Volume type
+If no ,only the root volume snapshot is included
+
+3.BlockDeviceMapping 
+Defines how voolumes are attached to instance launched from the AMI
+Contains: 
+Storage type 
+Devices 
+Snapshots 
+Size
+Volume type
+IOPS
+ThroughPUt 
+DeleteOntermination 
+Encryption
+
+What AMI doesn't contain is:
+*Public / Private IP
+*Instance ID
+*Elastic IP
+*Ec2 Metadata
+*Instnace's RAM content
+*CPU/RAM configuration
+*Security groups
+*VPC/Subnet
+*Key pair
+These belong to instance ,not the AMI
+
+
+How AMI are used in Real world Scenario's:
+
+Golden AMI'S
+Contains:
+* CIS hardening
+* Monitoring agents
+* Patching
+* Antivirus (for Windows)
+* Log forwarders (CloudWatch, Splunk)
+
+ Immutable Infrastructure
+Instead of updating servers → replace with new ones from AMI.
+
+Auto Scaling Groups (ASG)
+ASG launches new instances automatically using AMIs.
+
+ Backup of servers
+AMI = backup of entire OS state.
