@@ -1,0 +1,39 @@
+Create a Launch template
+--------------------------
+Creating a launch template allow you to create a saved launch configuration 
+that can be reused ,shared and launched at a later time. Templates can have 
+multiple verison 
+
+Step that will be followed while creating and Instance :
+
+Launch template  name and description 
+Step 1: Launch template name 
+Step 2: Template version description 
+Step 3: If you want you can select Auto Scaling Guidance option 
+
+Step 4: Add the template tag to apply it to the launch template
+Step 5: You can optionally specify a source template if you would like to 
+        create  a template from another existing template 
+
+Launch tmeplate contents:
+Specify the details of your launch template below : Leaving a filed blank 
+will result in the filed  not being  included in the launch template 
+
+Step 6: Application and OS image
+        \_Recents - Don't include in Launch template
+                  \_Recently launched 
+        \_My_AMI -Don't include in the launch template
+                 \_ Owned by me 
+                 \_Shared with me 
+        \_Quick Start [ here no AMI  or refferences you create a new one ]
+Step 6: Instance type
+Step 7: Key_Pair
+Step 8: Networking settings
+Step 9: Storage 
+Step 10: Resource Tag
+Step 11: Specify the Additinal details 
+
+[ From the step 6 to step 11 it's same as   Ec2 but according to your 
+configuration ]
+
+
