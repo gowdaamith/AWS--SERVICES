@@ -515,6 +515,28 @@ Your company has 20 SQL Server licenses.
 ➡ AWS License Manager blocks you from launching EC2 with SQL Server once you reach the limit
 ➡ Prevents accidental overspending
 
+You can use the servies only if a licence exists  -either AWS provider it or your company providse it
+
+
+Large companies run:
+
+* 100s of Windows Server VMs
+* 100 of SQL Server instances
+* 10–50 Oracle DB machines
+* Dozens of SAP systems
+
+If licenses are not tracked:
+
+* They might accidentally run more servers than licenses
+* Result → legal issues, big audit fines, huge extra costs
+
+AWS License Manager prevents that by:
+
+* Blocking unauthorized launches
+* Counting used licenses
+
+Letting companies Bring Their Own License (BYOL)
+
 24.Nested Virtualization
 --------------------------------------------------------------------------
 Nested virtualization means :
@@ -547,4 +569,160 @@ CPU Options:
 This lets you configure how many vCPU' and how many threads per core your Ec2.
 
 You can modify : 
-1.Number of vCPU'S
+1.Number of vCPU'S 
+Example: an m5.4xlarge normally has 16vCPUs
+You can reduce it to 8 vCPU
+
+2.Cores vs Threads
+YOu can disable HypreThreading (Thread per core =1 instead of 2)
+
+A thread  = a virtual execution pipeline inside a CPU core inside a CPU core 
+* Each core can run programs 
+* Each core may support Hyper-Threading or SMT
+* Hyper-Threading allows 1 core to run 2 threads at the same time 
+
+Simple explanation is : 
+Think of it like a highway lane
+* 1 thread  = 1 vehicle lane
+* 2 thread  = 2 vehicle lane in the same physical space
+So more vehicles (tasks) can move at the same time 
+
+
+AWS defines:
+
+1 thread = 1 vCPU
+So if a core has 2 threads, that means 2 vCPUs.
+
+Example (Intel Xeon / AMD EPYC):
+>> 8 physical cores × 2 threads = 16 vCPUs
+
+A thread is a virtual processing unit inside a core 
+AWS counts each thread as one vCPU
+So: 
+
+More threads = more vCPU = more parallel tasks
+Disabling threads = fewer vCPU but more stable per core performance 
+
+When to disable HyperThreading 
+You should disable the Hyperthreading when you need consistent , predictabel
+core performance
+
+Use cases where HT  should be Disabled:
+1.Databases
+2.High performance computing
+3.Real time or latency-sensitive  workloads
+4.Licensing Based on Physical cores
+
+When not to disable the HyperThreading :
+* When you run the microService
+* Java apps/ Node.js apps
+* Web server
+* API servers
+* CI/CD  agents
+* General workloads
+
+HT gives you 30–40% more throughput with the same price.
+
+
+✔ Why companies use this?
+1️⃣ Reduce Licensing Cost (VERY IMPORTANT)
+Oracle and SQL Server license by:
+➡ CPU cores
+➡ Sockets
+
+If you reduce vCPUs:
+You pay WAY LESS.
+
+Example:
+SQL Server Enterprise = $14,000 per core.
+
+If you reduce from 8 cores → 4 cores:
+You save ★ $56,000 ★
+(This is EXACTLY why companies use CPU options.)
+
+2️⃣ Performance Tuning
+Some workloads RUN BETTER without HyperThreading:
+
+* HPC (High Performance Computing)
+* Financial algorithms
+* Real-time systems
+* Gaming servers
+
+3️⃣ Reduce noisy neighbor effect
+Fewer vCPUs = predictable performance.
+
+MetaData Accessible
+---------------------------------------------------------------------------
+This controls whether application inside your Ec2 instance can read instance 
+metadata from :
+http://169.254.169.254/latest/meta-data
+
+If :
+Enabeled>>
+You application can read: 
+*Instance ID
+*Private/Public IP
+*IAM Role Credentials
+*Security group info
+*Tags (If allowed)
+
+This is required for:
+*Using Instance Profile IAM role
+* Auto-Scaling agent
+*Clound-watch agent
+*SSM agent 
+
+Disabled :
+YOu Ec2 instance canot read metadata
+
+Used in:
+*Highly secure environment 
+*Workload where IAM cred must never be leaked 
+*Host exposed to untrusted workloads
+
+25. Metadata Version 
+----------------------------------------------------------------------------
+AWS supports IMDSv1 and IMDSv2 
+
+IMDSv2 (recommended and used by default)
+Require a token for every metadata request
+
+This protects against SSRF attacks (Server side request forgery )
+Meaning : a vulnerable web app cannot be tricked into exposing IAM credentials 
+
+26.Metadata Hop Limit
+--------------------------------------------------------------------------
+Controls how many network hops a metadata request can travel
+Default =1 ,which means 
+*Only application inside the Ec2  instance can reach metadata
+
+Why this matters??
+If set>1:
+*Containers 
+*Proxies 
+*Nested networking 
+inside your Ec2 instance might  be able to read the metadata
+
+Best Practices:
+Set hop limit = 1 unless you are using:
+* Kubernetes on Ec2
+* Docker containers that need role credentials 
+
+
+27.Allow tags in Metadata
+---------------------------------------------------------------------------
+This options decides whether your Ec2 instance can read its own tags through metadata
+Example: 
+Name = web-server-1
+Environment = prod
+Owner = devops-team
+
+Benefit : 
+YOur app doesnot need AWS API permission to read these tags
+Example use cases:
+*Agents auto-configuring based on env
+*Logging systems adding instances metadata
+*Apps  that use tags to select configuration 
+
+AWS metadata URL for tags:
+>> http://169.254.169.254/latest/meta-data/tags/instance
