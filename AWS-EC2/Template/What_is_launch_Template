@@ -1,0 +1,45 @@
+Launch Template
+-------------------------
+A Launch template is  a reusable template containing Ec2 instance 
+configuration such as : 
+*AMI
+*Instance type
+*Security Group
+*Key pair
+*User data
+*IAM role
+*Storage
+*Networking setting
+*Tags 
+*EBS configs
+*Monitoring configs
+
+It makes launching consistent ,fast,automated and version controlled
+
+Why do we need a Launch template??
+Because manually launching  Ec2 every time is slow and error-prone
+Template allow:
+*Auto scaling group
+*Spot fleets
+*Ec2 fleet
+*Consistent environment creation 
+*Versioning 
+to use a standardized Ec2 setting
+
+Launch Template  = All setting for launching an Ec2 instance  including the Advance section 
+
+
+Launch Template versioning 
+--------------------------------
+Launch template support versions
+ex:
+*Version 1 -> AMIv1
+*Version 2 -> Updated user data
+*Version 3 -> New AMI + Bigger instance type
+
+When autoscaling group or Ec2 fleet uses the template :
+*You can choose the version number or latest version 
+
+This enable the safe deployment ,rollback and controller updates
+
+
