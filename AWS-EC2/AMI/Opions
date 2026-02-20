@@ -1,0 +1,136 @@
+Copy AMI:
+-----------------------------------
+Create a copy of an Amazon Machine Image in a Region
+
+When you want to create a copy of your AMI  follow these steps:
+
+Step 1: Enter the AMI copy name
+Step 2: Enter the AMI copy description 
+Step 3: Destination Region 
+Step 4: Select the optoin Copy-tag if you want to copy the tags
+Step 5: Enabel time based copy [ If you want to  want to complete the copie of the 
+                                 AMI withing a specific time ,this time applies to 
+                                 individual volume separately ]
+Step 6: Choose whether  to Encrypt the EBS snapshots of AMI copy 
+Step 7: If you want to add the tags click on add the new tag [ You can also choose wheather
+                                                               to applie the tags individually 
+                                                                or together for the snapshot and image ]
+Step 8: Create
+
+____________________________________________________________________________________________________________________
+Edit AMI permission 
+-------------------------
+By editing the permission of an AMI ,you can share it with the AWS accounts 
+,organizations or OUs that you specify 
+
+By following these steps you can edit the permission:
+
+Step 1: AMI availability  
+        \_Public - Share the AMI publically with all the AWS users 
+        \_Private - Share the AMI with specific accounts ,organizations or OU's
+
+Step 2:  Associated snapshot settings
+       \_Manage permissions for all snapshots that are associated with 
+         the selected AMI .You can manage individual snapshot sharing 
+         permission on the snapshot page 
+
+         Permission to create volume from snapshots
+        \_applies only when sharing with specific AWS accounts .Allows shared
+          accounts to create EBS volumes from the  AMI's snapshot ,in additionn to 
+          launching the instance
+
+Step 3: Shared accounts
+        \_ Here you can add the accounts or remove the accounts by there accout ID
+Step 4: Shared organization: 
+        \_Here you can add a organization or OU ARN   or remove by there ARN 
+____________________________________________________________________________________________________
+Manage Tags
+-----------------------
+A Tag is a custom label that you assign to an AWS resources .You can use tags to help organize and Identify your Images
+
+Step 1: Click on Add tag to add the tag
+         \_ where you should specify  Key and Value 
+____________________________________________________________________________________________________________________________________
+Deregister AMI
+-------------------------
+This means remove the  AMI from your account 
+Note: Yu should manually delete this associated snapshots afterward 
+
+After you deregister  an AMI ,you can't use it to launch new instances
+____________________________________________________________________________________________
+Manage AMI deregistration protection 
+-------------------------------------------
+You can protect an AMI from being deregistered by enabling deregistration protection 
+You can also include a 24-hour cooldown period during wich deregistration protection 
+remain enforced when you disable deregistration protection 
+
+Deregistration protection:
+\_Disable
+\_Enabel with a 24-hour cooldown period
+\_Enabel without cooldown 
+____________________________________________________________________________________________
+Change Description
+-------------------------------
+Edit the AMI's description text
+_________________________________________________________________________
+Manage AMI Deprecation 
+-------------------------------
+You can deprecate an AMI to indicate that it is out of data and should not be used .
+You can also specify a future  deprecation  data for an AMI ,indication when the AMI will be out of date
+
+Step 1: Enabel the Deprecate (tion) of the AMI
+Step 2: Specify the Deprecation Date and Time 
+__________________________________________________________________________________________________________
+Register Instance store-backed AMI
+------------------------------------------
+Most modern AMI's are:
+*EBS backed ->  Stored as EBS snapshosts
+But older AMI's can be : 
+* Instance-store-backed -> stored as files in Amazon S3 ,not EBS 
+
+Instance-store-backed  AMI's boot from the local NVMe/SATA disks   not from EBS volumes 
+These AMI's are rare and old and mostly used in on-prem migration ro legacy system 
+
+Summary : 
+*Register instances store-backed AMI
+ Allows you to manually register an AMI that boots from  instances store 
+ not EBS
+*Require an image manifest
+ This files in S3 describing how the AMI is built
+*Used for old/legacy systems
+ Not for new workloads
+______________________________________________________________________________________________________
+Configure the fast launch 
+-------------------------------
+Windows instances normally take longer to boot than Linux because windows perform 
+*Disk setup
+*Driver initialization 
+*Sysprep customization 
+*OS optimization 
+
+Fast Launch prepares the AMI in advance so that : 
+*Boot time becomes faster 
+*Instance start up in second instead of minutes 
+
+Not needed for the:
+* Linux AMI'S
+* Low Scale systems 
+__________________________________________________________________________________________
+Disable AMI
+-----------------------------------
+After you disable the AMI,it is made private and its state is changed to disabeled .
+YOu can't launch a new Ec2 instance from a disabled AMI 
+
+Archive the Associated snapshots:
+To reduce your snapshots  storage costs ,you can archive the snapshots after 
+You disable your AMI .YOu can archive snapshots the snapshot screen  
+If you want you can re-enble your AMI  .You'll need to move the snapshots
+associated with the AMI back from the archive tier to the standard snapshot tier
+____________________________________________________________________________________________
+AMI usage
+-------------------------------------
+From this option we can take :
+\_Create my AMI usage  report
+\_View referenced resource 
+
+
