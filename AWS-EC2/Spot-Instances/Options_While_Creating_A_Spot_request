@@ -1,0 +1,118 @@
+What is a Spot Fleet ?
+
+A Spot fleet is a smart system that : 
+✔ Launches multiple Spot Instances
+✔ Chooses the cheapest and most available instance types
+✔ Automatically replaces interrupted instances
+✔ Can mix On-Demand + Spot
+✔ Ensures you always have the target capacity
+
+Think of it as an auto-scaling system for Spot + On-Demand.
+
+____________________________________________________________________________________________________________
+1.Launch Parameters
+---------------------------
+Spot fleet needs to know what type of instance to launch 
+
+Here you have two option: 
+                         \_Manually configure launch parameter 
+                            - Select an AMI  and configure  optional parameter - Just like creating an Instance with the configuration you want 
+                         \_Use  a Launch template 
+                            - Use a launch template to quickly  set instances  launch 
+
+2.Additional request details 
+  Here you can either apply the default settings or  use a custom setting
+
+In Default: 
+We use aws-ec2-spot-fleet-tagging-role
+This  IAM role allows Spot fleet to : 
+*Launch Ec2 instances
+*TaG  the instances automatically 
+*Attach load balancers or target group [ manually ] 
+*Terminate the instance when needed
+
+if you do not choose the default :
+\_Give a IAM fleet Role
+\_Start date [ Means the fleet will start requesting spot instances  at the exact time]
+\_End date   [ Spot fleet will stop requesting  new instances at this time 
+
+Terminate the instances when the request expires 
+\_ if checked -> At the End of the time ,AWS automatically teminate all instances in the spot fleet
+\_ if not checked -> Instances will keep running  even after the spot request ends
+
+LoadBalancing [ old apps ]
+\_Spot fleet can automaticallly attach new instaces to load balancers
+Use full for the:
+*Web servers
+*Auto Scaled application 
+*High availability setups
+
+Receive the traffic from one or more load-balancers
+\_Select the load-balancers 
+
+Target Group: [Web apps , microservices ] 
+if you are using an application load-balancer  ,Spot fleet registers instances into a Target group 
+
+What target group does:
+*Perform the health checks
+*Adds or removes instances based on health 
+*Distirbute the traffic based on rules
+
+How its works with Spot fleet:
+*Spot instances launch  -> automatically  added to Target group
+*Instances unhealthy  -> ALB stops sending traffic
+*Instances terminated  by spot -> Target group removes it 
+When to use:
+✔ Microservices
+✔ HTTP/HTTPS traffic
+✔ Modern apps
+✔ You want path-based routing (/login, /admin, etc.)
+
+Target capacity 
+---------------------------
+\_Here we specify how many instances or vCPU the Spot fleet should launch  ex: 10
+\_Include On-Demand base capacity - This keeps a part of the total capacity into always running On-Demand instances
+    - Exxmaple if we give 5 ,then 5 out of 10 instances will be  on-demand and these will not be terminated
+\_Maintain Target Capacity - Automatically replace the interrupted spot instances with the instance from the spot pool that best suite the requirement 
+    - Here we can select twhe Interruption behaviour ,such as Terminate , Stop and Hibernate
+\_Set maximum  cost for the spot instace - Set the maximum amount per hour that your're willign to pay for all the spot instances  in yuor fleet
+
+Capacity Rebalance
+\_ When a rebalance notification is sent to a spot instance , Spot fleet automaticcally attempts  to replace the 
+   instance before it is interrupted 
+
+Network  
+-------------------------------
+Network
+You choose the VPC where to launch the instances 
+\_Choose the VPC 
+Availability Zone
+Availability Zone are isolated location specific to a separate geographic area know as regions .
+With spot ,you can select multiple  availability zones withing a specific region to launch your spot instace
+
+Instance type requirement
+----------------------------------
+Enter your compute requirement and let us choose optimal instance type to fullfill 
+your spot fleet  request ,or manually select the specific instance types you want to use
+
+Here your Enter your vCPU and memory  compute of vCPU per instance 
+vCPU - maximum and minimum 
+Memory(GiB) Maximum and minimum 
+
+And you can specify additional instance attribute if you want 
+
+After providing your requirement AWS provide you with the instance type that match your requirement if 
+want to choose them manually you can choose the instance type you want and  and exclude the remaining one
+or keep it by default 
+
+Allocation Strategy 
+-----------------------------------
+Spot allocation Strategy 
+The allocation Strategy  determines which of your available pools to request the instance from 
+\_price capacity optimized  
+\_Capacity optimized 
+\_Diversified across all pods
+
+
+Click on Launch to create the spot fleet 
+
