@@ -1,0 +1,53 @@
+What is an Ec2 Spot Request ???
+An Ec2 Spot request is a way to request Ec2 spot instances ,which are unused Ec2 capacity 
+offered  by AWS  at up to 90% cheaper than On-Demand pricing 
+
+But - These can be interrupted by the AWS at any time if AWS needs the capacity back .
+AWS does this because ,Instead of wasting the idle servers ,AWS sells them at huge discounts
+to the user's but without a guarentee   that you can keep them forever
+
+
+The Most Important Rules of Spot Instances are :
+Rule 1: AWS can stop your Instance with a 2-Minute Warning 
+*AWS sends a notice throught :
+  - A cloudWatch agent
+  - Instances metadata endpoint
+*After the 2 minutes  instances stops or terminate
+
+Rule 2: You do Not control When  the interruption happen
+Depends on region ,AZ,and instance type capacity 
+
+Types of spot requests
+--------------------------------
+1.One-time spot request
+*AWS tries onec to launch your spot instance
+*If the price / capacity isn't available  -> request fails
+*Best when you want a single instance quickly 
+
+2.Presistent Spot Requests
+*The request stays ACTIVE  even if the instance stops or is interrupted 
+*AWS will keep trying to launch it again 
+*Good for long-running workloads that can resume 
+
+Spot instance lifecylce:
+--------------------------------
+1.You submit a request (choose type + max price + instance type)
+2.AWS checcs if capacity is available 
+3.If available  -> Spot instnaces launches
+4.If not available -> requests waits in queue
+5.If your instances is interrupted  -> AWS tires again [ if you selected persistent request ]
+
+When to  Use Spot instances 
+*Containerized workloads
+*Big Data
+*CI/CD pipeline 
+*Machine Learning training
+*Batch processing Jobs
+*Image / video  rendering 
+*Distributed workloads
+
+Whenn NOT use the Spot instances
+*Databases
+*Stateful application 
+*System requiring guaranteed uptime
+*Production workloads where interruption is unacceptable
