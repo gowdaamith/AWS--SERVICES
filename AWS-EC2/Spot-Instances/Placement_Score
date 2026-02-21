@@ -54,4 +54,22 @@ If score drops → Spot availability is decreasing.
 ________________________________________________________________________________________________
 Calculation of the placement Score 
 
-You Enter your requiemnet 
+Spot placement score helps you to select optimal Region or Availability Zones to run 
+Workloads  that can use multiple  instances
+
+Here While calculating  the Placement socre you should specify things like
+
+\_Target capacity : Set your total spot target capacity  in number of instances ,vCPU ,or Memory
+\_Instance type requirement :
+                             \_Specify instance attributes that match your compute requirement 
+                             \_Manually select instance type 
+
+If you choose the  1 first option then you should select : 
+\_Then  minimum and maximum number of vCPU per instance 
+\_Enter the minimum and maximum GiBs of memory in GiB per instance
+\_Choose the CPU architecture
+
+Additionally instance attribute if needed 
+
+>> Click on the Load new placement Score  and Look at the answer deeply  using the filters 
+
