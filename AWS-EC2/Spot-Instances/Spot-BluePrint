@@ -1,0 +1,62 @@
+Spot BluePrint is an AWS feature that  help you auto-generate  the best policies  spot  
+configuration for your workloads by analyzing your requirements and automatically choosing : 
+
+✔ The right instance types
+✔ The right allocation strategy
+✔ The right Regions / AZs
+✔ The correct fleet structure
+✔ The ideal Spot parameters
+
+
+This of it as :
+     “A smart advisor that designs the optimal Spot Fleet or Spot Auto Scaling Group configuration for you.”
+It removes guesswork and gives you a recommended Spot architecture.
+
+What Spot BluePrint Does is???
+When you give AWS your workload  requirement (vCPU,RAM,region,OS,etc)
+
+Spot BluePrint automatically:
+1.Picks the ideal instance familie
+2.Picks the ideal size
+3.Select the best Spot capacity  pool
+4.Generate a recommended configuration 
+5.Suggests the best allocation strategy 
+6.Sets up target capacity distribution 
+7.Produces a ready-to-watch  template
+
+Why spot Blueprint is Important??
+✔ Helps choose the best Spot pools
+✔ Reduces interruption risk
+✔ Increases availability
+✔ Saves cost by choosing lower-priced pools
+✔ Helps beginners avoid bad Spot setups
+✔ Helps advanced users optimize large fleets
+
+
+________________________________________________________________________________________________
+How to set it up: 
+
+\_Blueprint Name
+\_Permission
+            \_Ec2 Instance IAM role  : Give the instance permission  to access the repositories 
+                                        in which the application are stored
+\_Network: Choose the VPC  in which to launch your AWS resources 
+\_Auto_Scaling_Group  : Specify the size of the ASG by changing  the desired capacity 
+\_Spot configuration  : We will select  the optimal instance type based on your application  resources
+                        criteria for vCPU and memory 
+\_Target Tracking scaling policy: Choose whether to use a scaling policy  to dynamically resize your 
+                                   ASG  to meet changes in demand
+\_Application loadBalancer : the blue print will create an applicationo load balancer  
+                            - We should specify the Scheme and  port 
+
+Then it will generate the code in CloudFormatoin Template and Terraform 
+
+
+
+
+
+
+
+
+
+
