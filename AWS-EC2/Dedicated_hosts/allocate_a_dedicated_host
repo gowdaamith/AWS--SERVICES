@@ -1,0 +1,19 @@
+Dedicated host allow you to provision Ec2 instances  on physical  server fully dedicated d
+for your use
+
+Dedicated Host Setting :
+\_Name tag:   Name of your Dedicated host
+\_Instance family: Specify the instance family to be specified by the dedicated hosts
+\_Enabel > Support multiple instance type: Launch different instance type  from the same instance family
+                                   on the dedicated host 
+\_Instance type : The instance type that can be launched  onto dedicated hosts
+\_Availability Zone : The availability zone  in which  the dedicated host is located 
+\_Outpost ARN :      Unique ID of your physical AWS rack sitting in your datacenter AWS uses it to deploy
+                     resources onto the correct outpost 
+\_Instance auto-placement : Disabling auto-placement will preserve the dedicated host for targeted 
+                             Launch requests .enabling auto placement  will allow untargeted (no host ID
+                            (no host ID specified ) launch requests to succed 
+\_Host recovery : Automatically restart your instance on to a new replacement host if your 
+                  current  host is unreachable  due to permanent failure 
+\_Quantity: The number of Dedicated hosts you'd like to purchase for this configuration 
+\_Tags-  Optional 
