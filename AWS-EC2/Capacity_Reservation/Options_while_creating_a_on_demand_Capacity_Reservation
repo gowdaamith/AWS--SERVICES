@@ -1,0 +1,38 @@
+             Create On-Demand Capacity Reservation (ODCR)
+
+Instance details:
+\_Instance type     : a1.medium
+\_Platform          : Linux/Unix
+\_Availability Zone : ap-south-1a
+\_Tenancy           : Default
+\_Placement Group   : 
+
+\_Total capacity    : You can reserve capacity up to your current On-Demand instances quota
+
+
+Capacity Reservation Details:
+\_Capacity Reservation Starts 
+                            \_Immediately 
+                            \_At a future data
+Capacity reservation Ends: 
+                           \_At a specific time 
+                           \_Manually 
+
+Instance Eligibility : 
+                    \_ Open : Any instance with matching  attribute 
+                    \_Targeted : Only Instances that target the capacity reservation 
+
+Tags: 
+    \_Key : value 
+
+_____________________________________________________________________________________________________
+                                Purchase  Capacity Blocks for ML 
+Capacity Block Requirements :
+\_Instanc_type
+\_Platform
+\_Total capacity 
+\_Duration 
+\_Earliest start date
+
+
+Create 
