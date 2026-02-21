@@ -1,0 +1,119 @@
+Dedicated hosts
+----------------------------
+A dedicated host is a physical server fully allocated to you ,not shared with nay other 
+AWS customer
+
+YOu get: 
+*Full contorl over physical CPU SOCKETS 
+*Control over NUMA nodes
+*Control over instance placement on the host
+*Ability to use bring-your-own licenses like window server ,SQL server,Oracle using  per-core / per-socket licensing 
+
+Think of it as a  AWS giving you your own hardware inside their data center 
+
+Why dedicated hosts exits??
+Main reasons : 
+1.Licensing compliance  -Most important 
+For software licensed per physical core ,per socket  or per host ,like : 
+- Microsoft windown server
+- Microsoft SQL server
+- Oracle Database
+- Some enterprise security tools
+
+You need to know the exact hardware  you run on 
+* On normal Ec2 instances ,hardware changes   -> licensing terms break 
+* Dedicated Host gives predictabel hardware -> Licnese legally valid 
+
+
+2.Regulatory  / Compliance  Requirements 
+-------------------------------------------------
+Some industries require 
+* Single-tenant  hardware 
+* No noisy neighbors
+* No multi-tenant virtualization 
+
+Dedicated host meet these standards 
+
+Example: 
+*Financial services
+*Governament workloads
+*HealthCare compliance
+
+3.Work laod Isolation 
+---------------------------------------------
+No other customers share the hardware ,so : 
+*Less noisy neighbor  risk 
+*Increased security 
+
+
+⚙️ What You Control Inside a Dedicated Host
+You can:
+
+Place specific EC2 instances on specific sockets/cores
+Control how many VMs run per host
+Use host recovery to migrate instances
+Track licensing using AWS License Manager
+
+AWS also provides:
+Host ID
+EC2 instance placement
+Hardware specification
+Sockets, cores, vCPUs mapping
+
+
+
+✔️ When to Use Dedicated Hosts
+-------------------------------------------------------------
+Use Dedicated Hosts when:
+
+🔶 You bring your own licenses (BYOL)
+Examples:
+
+- SQL Server Enterprise per-core
+- Windows Server Datacenter per-core
+- Oracle DB per-core licensing
+
+🔶 You need hard isolation
+- For compliance rules that do not allow multi-tenant servers.
+
+🔶 You want deterministic hardware
+For:
+
+- High-performance workloads
+- Low-level tuning
+- Guaranteed CPU mapping
+- NUMA aware apps
+
+🔶 You need to use older, special OS
+Like:
+
+- Windows 2003
+- RHEL with custom kernel
+- Legacy appliances
+- These cannot run on shared hardware.
+
+
+❌ When NOT to Use Dedicated Hosts
+Avoid Dedicated Hosts if:
+
+- You don’t care about physical hardware
+- You don’t have BYOL licenses
+- You want autoscaling and elasticity
+- Cost matters → dedicated hosts are very expensive
+- In most cases, normal EC2 is better.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
