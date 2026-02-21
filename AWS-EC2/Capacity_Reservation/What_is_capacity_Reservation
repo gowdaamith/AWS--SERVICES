@@ -1,0 +1,27 @@
+Capacity Reservation
+-----------------------------------------------
+On-Demand  Capacity reservation (ODSR)  let you reserve Ec2  capacity  in a specific  AZ so that 
+AWS guaranteee you can launch the instance you need 
+
+Capacity Reservation  = Capacity Guarantee 
+Not a pricing Discount 
+
+Capacity Reservation  Pricing and Billing 
+-----------------------------------------------
+Billing Rule:
+* You pay the on-Demand instance hourly rate for the instance types that the reserved capacity support 
+* But you pay for the reservation whether the instance runs or not unless using saving s Plans or RI matching 
+
+Exmaple : 
+You create a Capacity Reservation for:
+3× t3.medium in ap-south-1a
+
+Even if 0 instances are running, AWS charges you:
+👉 3 × hourly On-Demand price of t3.medium
+
+Because those resources are locked for you.
+
+Can i reduce the cost ???
+Yes -saving plans or Reserved  instances  can cover the capacity reservation 
+ - You get capacity guarantee 
+ - You still get cost savings 
