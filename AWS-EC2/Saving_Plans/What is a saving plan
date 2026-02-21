@@ -1,0 +1,106 @@
+What are AWS saving plans??
+AWS saving plans lets you save money by commiting to spend a fixed amount per hour 
+Ex: $5/hour for 1 to 3 year
+
+You commit to money ,Not to  a specific Ec2 instance
+
+AWS  will automatically apply discouted rate to your usage every hour until your commitment 
+is used up 
+
+
+Type of Saving Plans (Easy Understanding )
+1.Compute Saving Plans 
+Covers : 
+- Amazon  Ec2 
+- Amazon  Fargate
+- AWS Lambda
+
+No Restriction on: 
+- Region
+- Instance Family
+- Instance size
+- OS
+- Tenancy
+Use this : When you want maximum flexibility ( Change the instance types anytime)
+
+Ec2 Instance Saving Plans (Largest saving)
+---------------------------------------------
+YOu commit to one instance family inn one region ,example 
+> M5 in us-east-1
+But you can change:
+- Size
+- OS
+- Tenancy
+- Availability Zone 
+
+Use this : When you know you will always use a specific Ec2 family 
+
+3.SageMakere Saving Plans 
+-----------------------------------------------
+* Applies to all Amazon  SageMaker components 
+- Training 
+- Inference
+- Hosting 
+- Processing 
+
+Works across : 
+- Any instance family 
+- Any instance size
+- Any region 
+
+Use this: If your workload  are heavily using AMAZON sagemaker for ML 
+
+5.Database Saving Plans
+-------------------------------------------------
+Applies to many AWS managed databases
+✔ Amazon Aurora
+✔ Amazon RDS
+✔ Amazon DynamoDB
+✔ Amazon ElastiCache
+✔ Amazon DocumentDB
+✔ Amazon Neptune
+✔ Amazon Keyspaces
+✔ Amazon Timestream
+✔ AWS Database Migration Service
+
+Commitment term : 1-Year only 
+NO upfront required 
+
+Use this : If you are using a AWS-managed database service heavily 
+
+Example
+------------------------
+How this works : 
+
+You buy a 1-year  Saving Plan with commitment of :
+$5 per hour 
+This means :
+Every hour .AWs will give you discounted pricing  for your usage up to $5 /hour
+If your hourly usage costs more than %5/hour ,the extra is builled tat normal on-demand rate
+
+
+Another exmaple 
+-----------------------
+Case 1 — Your usage is $4/hour
+---------------------------------------------
+Your commitment = $5/hour
+Your actual usage = $4/hour
+
+AWS will bill:
+$4 at discounted Savings Plan rate
+
+You will still pay $5, because that’s your commitment
+(The extra $1 is just part of the commitment — you don’t get it back.)
+
+Case 2 — Your usage is $7/hour
+----------------------------------------------
+First $5/hour → billed at discounted Savings Plan rate
+Remaining $2/hour → billed as normal On-Demand
+
+So here your bill =
+✔ Savings Plan discounted bill for $5
+➕
+✔ Normal On-Demand bill for $2
+
+
+
