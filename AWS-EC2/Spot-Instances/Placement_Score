@@ -1,0 +1,57 @@
+What is Spot Placement Score ??
+It tells you: 
+  " If you try to launch these spot instances Now ,how likely are you to get stable 
+    capacity with low interruption "
+
+The score ranges from  1 [bad] -> 10 [Good]
+
+AWS created this feature  because
+Previously  Spot instance depend on the capacity pools and these pools vary by : 
+*Region 
+*AZ
+*Instance type
+*Instance size
+*Architecture
+*Number of instances requested 
+
+Before this feature ,Customes had no idea wheather their spot request would fail or not .
+
+Now you get real-time score that helps you pick :
+*Best Region 
+*Best AZ
+*Best instance type
+*Best fleet  configuration 
+
+What does the Score actually check ?
+Spot placement Score evaluates 
+*Spot capacity availability  for your instance type
+* Interruption rate
+* Number of Instances you want
+* Region and AZ competition 
+* Your attribute -based selection flexibility 
+
+What the score mean in real time : 
+| Score | Meaning                                                                      |
+| ----- | ---------------------------------------------------------------------------- |
+| 8–10  | Excellent Spot capacity. Very low interruption risk. Best chance of success. |
+| 5–7   | Acceptable. Some interruptions but stable.                                   |
+| 3–4   | Risky. You may face interruptions or failed launches.                        |
+| 1–2   | Bad idea. Very likely that Spot capacity is unavailable.                     |
+
+ Where Spot Placement Score Helps
+✔ Choosing instance types
+Choose more flexible types → higher score.
+
+✔ Choosing region
+Maybe us-east-1 has low score
+But us-west-2 has 10
+→ Better to launch in us-west-2
+
+✔ Scaling decisions
+If score drops → Spot availability is decreasing.
+
+
+________________________________________________________________________________________________
+Calculation of the placement Score 
+
+You Enter your requiemnet 
