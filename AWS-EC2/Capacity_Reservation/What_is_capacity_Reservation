@@ -1,27 +1,93 @@
 Capacity Reservation
 -----------------------------------------------
-On-Demand  Capacity reservation (ODSR)  let you reserve Ec2  capacity  in a specific  AZ so that 
-AWS guaranteee you can launch the instance you need 
+A Capacity reservation guarentee  Ec2 capacity in a specific Availability Zones 
+It does not give you discounts 
+- it only guarentee capacity availability 
 
-Capacity Reservation  = Capacity Guarantee 
-Not a pricing Discount 
+Think of it like: 
+-------------------
+Reserving  seats in advance so the compute capacity is always availabel when I need it 
 
-Capacity Reservation  Pricing and Billing 
------------------------------------------------
-Billing Rule:
-* You pay the on-Demand instance hourly rate for the instance types that the reserved capacity support 
-* But you pay for the reservation whether the instance runs or not unless using saving s Plans or RI matching 
+There are two types of capacity reservation : 
+1.On-Demand Capacity reservation 
+*Guarantees compute capacity for any duration 
+*YOu can cancel anytime
+*Youpay on-Demand price for the instances that actully use the reservation 
+*Capacity sits reserved even if you do not use it 
 
-Exmaple : 
+2.Ec2 Capacity Block for ML
+*Only of GPU based ML workloads
+*Reserved 1 to 14 days, or multiples of 7 days (up to 182 days)
+*You schedule  them ahead 
+* Very high-demand GPU clusters
+*Charged Upfront for the block duration 
+
+🟨 How ODCR Billing Works (VERY IMPORTANT)
+⭐ You pay only when the reserved capacity is used by instances.
+This is the most misunderstood part.
+
+Example:
 You create a Capacity Reservation for:
-3× t3.medium in ap-south-1a
 
-Even if 0 instances are running, AWS charges you:
-👉 3 × hourly On-Demand price of t3.medium
+5 × m5.large instances
 
-Because those resources are locked for you.
+On-Demand price = $0.096 per hour
 
-Can i reduce the cost ???
-Yes -saving plans or Reserved  instances  can cover the capacity reservation 
- - You get capacity guarantee 
- - You still get cost savings 
+Case A ⬇
+You run 3 EC2 instances inside that reservation →
+You pay 3 × On-Demand price
+
+Case B ⬇
+You run zero EC2 instances inside reservation →
+❌ You pay NOTHING (this is true since 2019 — AWS changed billing)
+
+Case C ⬇
+You run 7 instances, but reservation only holds 5 →
+
+First 5 get capacity guarantee
+Remaining 2 run normally without guarantee
+Billing is always On-Demand rate
+
+
+| Scenario                                   | Do you pay? | How?                              |
+| ------------------------------------------ | ----------- | --------------------------------- |
+| Capacity reserved but 0 instances running  | ❌ No        | No bill                           |
+| Some instances running ≤ reserved capacity | ✔ Yes       | On-Demand price for each instance |
+| Instances running > reserved capacity      | ✔ Yes       | Extra instances billed normally   |
+
+
+ ODCR gives capacity guarantee — not discount.
+
+You can combine ODCR with:
+✔ Savings Plans
+✔ Reserved Instances
+to get discounted prices on top of guaranteed capacity.
+
+ Quick Real-World 
+--------------------------------------------
+ODCR (On-Demand Capacity Reservation)
+→ “Block a table in a restaurant for free.
+You only pay if you sit and eat.”
+
+ML Capacity Blocks
+→ “Book the entire hall for 2 days.
+You pay upfront whether you use it or not.”
+
+
+ Why would someone use ODCR?
+----------------------------------------------
+During Black Friday / app launches → need guaranteed scaling
+For DR (Disaster Recovery)
+For regulatory requirements (banks, government)
+Ensures capacity during region/zone shortages
+
+ Why would someone use ML Capacity Blocks?
+-----------------------------------------------
+GPU shortages are common
+Deep learning training needs stable GPU cluster
+You book capacity exactly when needed
+
+
+
+
+
