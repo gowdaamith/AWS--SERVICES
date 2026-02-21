@@ -1,0 +1,77 @@
+1.Purchase more like this 
+---------------------------
+
+This means : Buy more Reserved instances with the same configuration 
+            (Same family ,Size , OS ,region ,tenancy ,term)
+
+Use this when : 
+* You have more Ec2 instances running
+* And YOu want more discounts coverage
+
+Example: 
+If you already bought 1 RI for m5.large, this option helps you buy 2 or 3 more easily.
+
+2.Modify Reserved Instances
+----------------------------
+This options is used only for standard RI's (not convertible)
+
+You can modify ?
+*Availability Zones  
+*Scope  (Regional to Zonal and vice-versa)
+*Instance Size within same family 
+*Networking types
+
+You canonot modify :
+*Instance family 
+*OS 
+*Region 
+
+3.Delete queued  Reserved Instances 
+-------------------------------------
+When you purchase an RI with a future start data ,AWS puts it into queue 
+This option allow you to cancel it before it start
+Once the T+RI has started it canoot be deleted 
+
+4.Renew Reserved Instance 
+-----------------------------------
+Reserved Instance do not auto -renew
+When your Ri is about to expire ,this option lets you : 
+>> Buy a new RI with the same configuration before the old one expires
+This is useful to keep continuous discounts
+
+5.Exchange Reserved Instances 
+------------------------------------
+This option is only for convertible Reserved Instances
+
+Convertibel RI's allow you to exchange for: 
+- Different instance family (e.g., m5 → m6i)
+- Different size (large → xlarge)
+- Different OS
+- Different tenancy
+- Different region
+You just need to exchange for equal or high cost
+
+6.Sell the Reserved Instances
+--------------------------------------
+You can sell standard  RI's  on the : 
+AWS  Reserved   Instances MarketPlace
+
+You can sell them when : 
+*You no longer need them 
+*You want to recover the money 
+*You over-purchased RI
+
+AWS finds a buyer and pays you back the remaining value 
+Convertibel RI's cannot be sold
+
+
+| Option                               | Meaning                                          |
+| ------------------------------------ | ------------------------------------------------ |
+| **Purchase more like this**          | Buy more identical RIs for more coverage         |
+| **Modify Reserved Instances**        | Change AZ, size, scope (Standard RIs only)       |
+| **Delete queued Reserved Instances** | Remove future-scheduled RIs before they activate |
+| **Renew Reserved Instances**         | Buy new RIs when current ones expire             |
+| **Exchange Reserved Instances**      | Change family/size/etc (Convertible RIs only)    |
+| **Sell Reserved Instances**          | Sell Standard RIs in marketplace                 |
+
+
