@@ -1,0 +1,14 @@
+A Dedicated Host Reservation  is a commitment that : 
+* You want a specific  Dedicated host type 
+* For 1 year or 3 years
+* You pay ALL Upfrnot / Partial Upfront / No Upfront
+* AWS gives you up to 70 to 75 per discounts
+
+- YOu keep the host
+- You can launch any number of allowed instances on the host 
+- Nobody else shares the physical server 
+
+Why do we need dedicated host reservation : 
+>> Dedicated host is billed On-Demand  -> Extremly expensive  
+With  reservation 
+>> You get big cost saving 
