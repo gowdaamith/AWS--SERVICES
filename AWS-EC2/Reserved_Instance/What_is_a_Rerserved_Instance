@@ -1,0 +1,54 @@
+What is a Reserved Instance  ?? Registration Fee + Discounted Hourly Pricing 
+A Reserved Instance  is a billing disount you get from AWS when you coomit to using a specific
+ Ec2  instancce for 1 or 3 year 
+
+Important : 
+A Reserved Instance  is NOT  an actual instance 
+It is only a discount applied ot matching running Ec2 Instances
+
+Why so people by RI's??
+Because RIs can give up to : 
+* 72% discount compared to On-Demand prices
+
+How Reserved Instance Work??
+You commit to AWS : 
+1.For How long ? : you will use the instance
+2.For what instance family ? : ex: m5.large,t3.micro
+3.For what region ? : ex: us-east-1
+4.For what tenancy ? : shared or dedicated 
+
+Once you commit .AWS appplies the discounted rate to your matching instances
+
+Example: 
+
+You buy a 1 -year Reserved Instance 
+*Instance family : m5.large
+*Region: ap-south-1
+*Tenancy: Default 
+*Platform: Linux 
+
+Now anytime you run an m5.large in ap-south-1
+AWS automatically applies the RI discounted hourly price
+
+Even if you launch multiple isntances the RI discounts  applies  to only one instance at a time 
+because you purchased only 1 RI 
+
+ Perfect Summary
+✔️ You pay the RI commitment based on the payment plan
+(All upfront / partial upfront / hourly)
+
+✔️ When you run a matching EC2 instance, AWS applies the discounted RI price to your usage
+✔️ If you DON’T run any matching instance
+You STILL pay the commitment fee
+(because you promised AWS you would use it)
+
+
+You choose the payment options : 
+All Upfornt: 
+*You pay the full RI cost immediately  for the entire  1 or 3 years
+
+Partial Upfront :
+* You pay some money now and the rest hourly discounted rates through the term 
+
+No Upfront 
+* You pay nothing now ,but AWS charges you the RI discounted  hourly price every hour for the full ( 1 or 3 year) 
