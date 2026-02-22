@@ -1,0 +1,25 @@
+Allocate Elastic IP address 
+----------------------------
+Elastic IP address setting
+\_Amazon's Pool of IPv4 addresses   -> This is default and most common option  = Means : AWS gives you a public IPv4 from its own pool 
+\_BYOIP ->Bring Your Own IP         -> This means you bring your own public IPv4 addresses that you own outside AWS 
+\_Customer-owned Pool               -> Used when you run AWS  outposts in your data centers 
+\_Allocate  using IPv4 IPAM pood    -> This option allocate Elastic IP  from an IP pool you have configured in VPC IPAM 
+
+
+Network Border Group :
+This defines where AWS can allocate an Elastic IP from 
+
+Global static IP addresses: 
+This is not part of Elastic IP ,This is AWS promoting  AWS Global ACcelerator ,which gives 
+
+Global Static IP (works worldwide)
+Anycast routing → Fastest path via AWS Edge network
+High availability
+Cross-region failover
+
+Elastic IPs are regional ,but global accelerator IPs are global 
+They give globallly accessible Ip's 
+
+Tags: 
+
