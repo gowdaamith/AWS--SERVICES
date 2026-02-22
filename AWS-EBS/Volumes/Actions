@@ -1,0 +1,154 @@
+Modify the volume:
+-----------------------------
+Modify the type ,size ,and performance fo an EBS volume
+
+Volume details: 
+\_Volume ID
+\_Volume type
+\_Size
+\_IOPS : IF supported
+\_ThroughPUT:  IT supported 
+
+Click MODIFY 
+
+Create a Snapshot:
+--------------------------------
+Create a point-in-time snapshot to back up the data on an Amazon EBS volume  to Amazon S3 
+Source Volume:
+\_Volume ID
+\_Availability Zone
+
+Fixed
+
+Snapshot details: 
+\_Description
+\_Encryption  : If enabeled for the Volume
+\_Tags 
+
+Click CREATE SNAPSHOT 
+
+Create Snapshot Policy :
+---------------------------------
+This will take us to  LifeCycle manager > Select Policy type [Custom Policy] > Create a life cycle policy 
+
+Speicfy the settings: 
+Target resources:  Specify the resources that are to be targeted by this policy 
+\_Target resource type : 
+                     \_Volume
+                     \_Instance
+\_Target resource tags : 
+                      \_Key an value of the targeted resource 
+\_Description: Policy description 
+\_IAM role :
+            \_Default : If you are not sure 
+            \_choose another role: If you want full control 
+\_Policy Status :
+                \_Enabel 
+                \_Disabel 
+
+Schedule details :
+\_Schedule_name: 
+\_Frequency 
+           \_Daily
+           \_Weekly 
+           \_Montly 
+           \_Custom core expression 
+\_Every 
+       \_1 hour
+       \_2 hour 
+       \_3 hour 
+       \_More 
+\_Start_At 
+          \_Time
+\_Retention type
+                \_Age
+                     \_Expire from standared tier  after __________ days or months or year of creation 
+                 \_Count 
+                       \_Keep : 3 or any number in the standard tier
+
+additional settings: 
+\_Tagging 
+\_Snapshot archiving 
+\_Fast snapshot restore 
+\_Cross - Region copy 
+\_Cross-account sharing 
+
+
+Detach a Volume: 
+-------------------------------
+You remove the volume from being attached to the ec2 instance 
+After you detach a volume,you might still be charged for volume storage ,
+if you no longer need the volume delete it to stop incurring charges 
+
+You can detach the  root EBS volume ,But only when the instance is stopped
+Some Ec2 instance use Instance store  (local NVMe SSD) as root volume  which cannot be detached 
+Ex: i3,c5d etc
+
+Forec detach : 
+-----------------------------------
+Force detachment of a stuck volume can cause damage to the file system or the data it 
+contains ,Only use this option as a last resort to detach a volume from a failed instance
+or if you are detaching a volume with the intention of deleting it 
+
+
+Manage Auto Enabeled  IO
+------------------------------------
+ Auto Enabeled IO ,Automatically allow input /output on the EBS volume after AWS detecs 
+an issue or complete a recovery 
+
+Normally when AWS detect a volume problem (Like hardware replacement ) ,
+it may temporarily disable I/O to protect your data 
+
+If auto-enabled IO is ON, AWS will automatically re-enable the vvolume once the issue is
+fixed  - no manual action needed 
+
+If Auto-enabeled IO is OFF ,the volume  will stay "I/O disabeled " until you manually enable 
+
+Resilience Testing 
+-----------------------------------
+These features are used to simulate failure on your EBS volume to test how your system  behaves under strss or fault 
+
+1.Create experiment 
+This option allow you to create a fault injection experiment using AWS FIS 
+You can simulate failure on up to 5 EBS volumes in the same availability Zone 
+
+Used for : 
+* Testing applicatoin resilience
+* Validating backup and recovery 
+* Chaos engineering  exercises
+
+Pause Volume I/O:
+--------------------------------
+This simulates a situation  where the volume stops responding 
+What happens?
+* all  read / write  operation  freeeze 
+* Instance tries to access the volume but gets no reponse
+
+This help to test : 
+* Application behavior when disk becomes unresponsive
+* Failover handling
+* Timeouts
+* Error recovery logic
+
+Inject volume  I/O latecy 
+--------------------------------
+This simulate slow disk performance  by adding artificail latency 
+Example:
+* Add 100 ms delay to every disk read
+* Add 200 ms delay to writes
+
+Used to test how your system reacts when:
+- Storage becomes slow
+- Database queries take too long
+- Application performance degrades
+
+AWS fault injection service [FIS]
+----------------------------------
+This opens the FIS console wher you can run : 
+*CPU stress
+*Network outages
+*I/O faults
+*Ec2 Instance termination 
+*EBS volume failure simulation 
+
+This is AWS' Chaos engineering service 
