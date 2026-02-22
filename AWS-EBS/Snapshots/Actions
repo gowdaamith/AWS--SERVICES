@@ -1,0 +1,143 @@
+1.Create a Volume from snapshot
+-------------------------------------
+Create an EBS volume to attach to any EC2 instance in the same availability Zone 
+
+Volume setting: 
+\_Volume type
+\_Size
+\_IOPS
+\_Throughput
+\_Availability Zones
+\_Fast Snapshot restore 
+\_Volume Initialization rate : Specify the rate at which  the snapshot blocks are to be 
+                                downloaded  from Amazon S3 to the volume 
+\_Encryption : Enable if you want to encrypt the volume 
+
+Tags:  Key : Values
+
+Click Create Vollumme 
+
+2.Create a Image from the snapshot
+----------------------------------------
+Image setting 
+\_Image name
+\_Descriptoin 
+\_Architecture 
+\_Root device name
+\_Virtualization type       : The virtualization type to be used by the Instance launched form this image
+\_Kernel ID   (use default) : The operating ysytem kernel for the AMI
+\_RAM disk ID (Use default) : The ram disk for the image 
+\_Boot Mode           :
+                      \_Use default or  UEFI [ modern OS ] or BIOS  [ older OS ]
+
+\_Block Device mapping : 
+                        The Snapshot volume will automatically be selected if you need you can specify the additional volum e
+\_Tags
+
+Click create Image
+
+3.Copy Snapshot 
+-------------------------------------
+Copy a snapshot from one AWS region to another or within the same region 
+
+Source snapshot:  Will be taken automatically 
+SnapShot copy details 
+\_Description : A description for the snapshot copy 
+\_Destination Region: The region in which to create the snapshot copy 
+
+\_Time based Copy [Enabel or Disabel]  : Speicfy a completion duration for the snapshot copy
+                                        Operation 
+\_Encryption  [Enabel or Disabel ]
+\_Tags : 
+       \_Key:Value 
+
+Create a copy snapshot 
+
+4.Snapshot settings
+--------------------------------
+4.1 Modify permission 
+---------------------------------
+By modifying the permission of the snapshot you can share it with the AWS accoutts that you specify 
+
+Setting : 
+\_Sharing Options: 
+                 \_Public : Share the snapshots publiccally with all AWS users in this region 
+                 \_Private : Share the snapshot with specific accounts 
+If you choose the Private then you must add teh instances by using their account ID 
+Shared accounts : 
+
+4.2 Snapshot Lock 
+----------------------------------
+Lock your snapshots to protect them against  accidental or malicious deletion's , to 
+store them in WORM (WRITE-once-Read-many)  format ,or to meet your organization's data  
+governance  requirement  .While a snapshot is laocked it cna't be deleted
+
+Enable or Disabel Loack snapshot :
+Snapshot lock protects snapshots from deletion for a lock duration you specify. Locks can be applied to snapshots in the pending or completed state.
+
+Lock Mode : 
+Governance Mode: The snapshot is locked for a specific period ,but it can be unlocked at
+                  any time  by users with appropriate permission 
+
+
+Compilence MOde: The snapshot is locked for a specific period  .it can't be unlocked  
+                 after the cooling-off period expire 
+
+Lock Duration : 
+               \_Lock the snapshot for
+                \_Lock the snapshot until 
+Save lock setting 
+
+
+4.3 Manage fast snapshot restore
+----------------------------------
+Snapshots that are enabled for fast snapshot restore 
+enable you to restore volume that are fully initialized  at creation 
+
+If you click on Enabel for any Az , AWS will : 
+1.Pre-warm  the snapshot  
+2.Make it instantly fast to restore  in the AZ 
+
+5.Archiving 
+---------------------------------
+5.1 Restore  snapshots from archive 
+----------------------------------------
+This brings the snapshot  back to standard storage so you can : 
+*Create volume 
+*Create AMI
+*Copy snapshot
+This may take several hours
+
+5.2 Change Restore period
+----------------------------------------
+This allows you to set how long AWS keeps the restored snapshot in standard storage 
+
+
+5.3 Archive snapshot 
+----------------------------------------
+This moves the snapshot to archive tier 
+*It becomes MUCH cheaper 
+*YOu cannot  use it to create  volumes unitl you restore it 
+*Restore time takes up to 24-72 hours 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
