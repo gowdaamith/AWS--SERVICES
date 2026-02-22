@@ -1,0 +1,73 @@
+Volume :   = BLOCK STORAGE  = HARD DISK 
+In AWS ,a volume is a block storage attached to an Ec2 Instance  
+It is the virtual "hard disk " of your cloud server 
+
+1.EBS Volume
+----------------------------------------
+It is a network attached ,persistent disk of your Ec2 instance 
+
+Key feature : 
+*Data persistent even after the Ec2 instances stops or terminate 
+*Can be detached  and reattached to another Ec2 Instance 
+*Comes in different performance type (gp3,io1,io2,st1.sc1)
+*Snapshots supported (backups)
+
+Example of use: 
+*OS disk (root volume)
+*Application storage
+*Database storage (because of high durability )
+*Snapshots to create AMI's
+
+
+2.Instance Store volume (Ephemeral storage)
+----------------------------------------------
+This storage is physically attached to the host machine (local NVMe/SSD)
+
+Key features 
+*Extremely fast (because it is local NVMe)
+*Data does not persist when the instance stops, hibernates or terminates 
+*Cannot be detached or moved
+*Available only onspecific Ec2 instances families 
+
+Example of use: 
+*Caching 
+*Temporary files
+*Scrath space
+*Data that can be regenerated 
+
+
+Where do you see volumes?
+When launching an Ec2 instance ,you see a section: 
+Storage : 
+- Volume 1 (Root)
+- Add  new volume 
+
+or when creating an AMI ,yousee 
+* Instance storage 1
+* Instance storage 2
+* Root volume 
+* Additional EBS volume 
+These are simply disks attached to your Ec2 instance
+
+
+How volume works with an Instance
+-----------------------------------------------------
+Every Ec2 instance must have at least one volume ,usually an EBS  root volume 
+Example :
+t2.micro
+  └── EBS Volume (8GB gp3) → OS installed here
+
+You can add more:
+t2.micro
+  ├── EBS Volume (8GB)
+  ├── EBS Volume (20GB)
+  └── EBS Volume (100GB)
+
+for some instance type:
+i3.large
+  ├── Instance Store NVMe 1
+  └── Instance Store NVMe 2
+
+
+
+
