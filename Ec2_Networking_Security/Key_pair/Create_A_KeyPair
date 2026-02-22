@@ -1,0 +1,56 @@
+Key Pair:
+A key pair, consisting of a private key and a public key, 
+is a set of security credentials that you use to prove your identity 
+when connecting to an instance.
+
+Key pair name: 
+Key pair type : 
+              \_RSA           Old classic encryption  algorithum  require large number key size (2048 or 4096 bits )
+              \_ed25519       New modern algorithum ,Stronger security with much smaller keys (Only 256 bits )
+Private Key file format:
+                       \_.pem : for use  with OpenSSH 
+                        \_.ppk : for use with puTTy 
+
+Tags : 
+      \_Key and value 
+--------------------------------------------------------------------------------------------------------------
+
+
+Security Strength :
+| Algorithm             | Key Size   | Security                                       |
+| --------------------- | ---------- | ---------------------------------------------- |
+| **RSA 2048-bit**      | Large      | Good (old standard)                            |
+| **RSA 4096-bit**      | Very large | Very good but slow                             |
+| **ED25519 (256-bit)** | Small      | Excellent (stronger than RSA-4096 in practice) |
+
+✔ ED25519 is considered more secure against modern attacks
+✔ RSA needs bigger keys to match ED25519 security
+
+Speed (Performance)
+| Task           | RSA    | ED25519       |
+| -------------- | ------ | ------------- |
+| Key generation | Slow   | **Fast**      |
+| Signing        | Medium | **Very fast** |
+| Verification   | Medium | **Fast**      |
+
+✔ ED25519 is much faster than RSA
+✔ RSA becomes slow with 4096-bit keys
+
+Key size : 
+- RSA-2048 key file ≈ 1.8 KB
+- RSA-4096 key file ≈ 3.4 KB
+E- D25519 key file ≈ 0.5 KB
+✔ ED25519 keys are smaller, easier to store & transfer
+
+Compatibility :
+| Feature                               | RSA     | ED25519                |
+| ------------------------------------- | ------- | ---------------------- |
+| Supports all old systems              | **Yes** | ❌ Sometimes NO         |
+| Works everywhere (AWS, Linux, GitHub) | **Yes** | ✔ Yes (modern systems) |
+| Very old OS (legacy systems)          | ✔ Best  | ❌ Not supported        |
+
+
+✔ RSA is universal
+✔ ED25519 is modern — supported by AWS EC2, Linux, GitHub, OpenSSH 6.5+
+❌ Very old enterprise systems may use RSA only
+
