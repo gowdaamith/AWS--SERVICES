@@ -1,0 +1,40 @@
+What is a EBS SnapShat???
+An EBS snapshot is: 
+* A backup of an EBS volume 
+* Stored in S3 internally [ YOu don't see it in the s3 directly ] 
+* Incremental  -> After the first snapshot ,only chaged blocks are saved
+* Used for disaster  recovery , cloing  volumes ,creating AMIs  etc
+
+
+Example Explanation : 
+------------------------------
+Imagine your EBS volume is your laptop harddisk 
+Taking a snapshot is like : 
+* Taking a backup of all the files at this moment 
+* if  something goes wrong ( delete files ,corruption ) You can restore everything using this backup 
+
+Snapshot lifecycle POlicy 
+-----------------------------
+The snapshot lifecycle polic automatically creates snapshots 
+
+* Creates a snapshots according to the schedule
+* Retains them for x days
+* Deletes old snapshots
+* Saves storage cost and provide regular backups 
+
+Why snapshot are important ??
+*Protect you from data loss
+*Easy to restore  (Create a new volume from the snapshot 
+*Useful for cloning environment 
+*Mandatory for backup in production 
+
+
+Quick example : 
+
+If your EBS volume is 100 GB and you take : 
+*Snapshot 1 -> Store full 100GB
+*Snapshot 2 -> Stores only changed blocks
+*Snapshot 3 -> again only chaged blocks 
+
+This saves cost and time 
+
