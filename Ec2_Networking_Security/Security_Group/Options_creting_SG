@@ -1,0 +1,164 @@
+Create security Group :
+\_Security Group name: 
+\_Description : 
+\_VPC :                     Security group are specific to the VPC 
+
+Inbound_Rule: 
+\_Type: 
+\_protocol :
+\_port range  :
+\_source :
+\_Description 
+
+Outbound_Rule:
+\_Type: All traffic are allowed by default 
+
+Tags: 
+    \_Key : Value pair 
+
+
+
+_______________________________________________________________________________________________-
+1.Type: 
+----------------
+This is the kind of traffic you want to allow 
+
+Example : 
+*SSH -> port 22
+*RDP -> port 3389
+*http -> port 80
+*https -> port 443
+*custom TCP -> You defind your own TCP port
+*custom UDP  -> You define your own UDP port 
+*All traffic -> Allow everything (dangerous )
+
+Type = Quick preset for commonly used port 
+
+2.Protocol 
+----------------
+The network protocol used by teh rule 
+
+Common values :
+* TCP -> Reliable ,connection-based (Used by SSH  ,HTTP ,databases)
+*UDP -> Faster ,no guarantee  
+*ICMP -> Ping and network diagnostic 
+*ALL -> all protocol 
+
+Protocol = How the traffic travels 
+
+3.Port range 
+--------------------
+The port numbers you want to allow traffic on 
+Example: 
+* 22 -> SSH
+* 80 -> HTTP
+* 443 -> HTTPS
+* 1024-65535 -> Range of ports
+* 0-65535 -> All port 
+
+Port = The specific application/service the rule applies to . 
+
+5.Source 
+----------------------
+From where the traffic is allowed (Who can access your instance)
+
+Common options
+* 0.0.0.0/0 -> anyone on the internet 
+* MY IP  -> Only your device can access
+* Custom Ip -> Any specific addresss 
+* Security group -> Allow only instances in another SG
+* VPC CIDR -> Allow traffic from you own VPC 
+
+Here we mainly have three categories 
+1.CIDR blocks
+2.Security Groups
+3.Prefix list 
+
+CIDR blocks  - IPv4 and IPv6
+------------------------------------------
+These define ranges of IP addresses that are allowed 
+
+IPv4 CIDR ex
+| CIDR           | Meaning                 | Use Case                               |
+| -------------- | ----------------------- | -------------------------------------- |
+| **0.0.0.0/0**  | Entire world (all IPv4) | Public websites, SSH (not recommended) |
+| **0.0.0.0/8**  | 0.x.x.x – 0.255.255.255 | Rarely used                            |
+| **0.0.0.0/16** | 0.0.x.x – 0.0.255.255   | Narrower than /8                       |
+| **0.0.0.0/24** | 0.0.0.x – 0.0.0.255     | Very small range                       |
+| **0.0.0.0/32** | Exact one IP: 0.0.0.0   | NEVER used (represents “this host”)    |
+
+IPv6 CIDR eXAMPLE:
+-------------------------------------------
+| CIDR                      | Meaning              |
+| ------------------------- | -------------------- |
+| **::/0**                  | Entire IPv6 internet |
+| **::/16**                 | Large IPv6 range     |
+| **::/32 / ::/48 / ::/64** | Smaller IPv6 ranges  |
+
+
+Security Group as Source 
+---------------------------------------------
+Meaning ; 
+Instead of allowing IP'S  ,you allow Ec2 instances in another security group to commnicate 
+
+When used ??
+When used?
+Example:
+- Web Server SG → allows inbound from Load Balancer SG
+- Database SG → allows inbound only from Web Server SG
+
+Why use SG's as source??
+*Dynamic 
+*Auto-Updating 
+*More secure 
+*No need to manage IP range
+
+Prefix Lists 
+------------------------------------------------
+Meaning : 
+Prefix lists are AWS managed large Ip blocks  for services 
+
+Example: 
+| Prefix List               | Meaning                               |
+| ------------------------- | ------------------------------------- |
+| **Amazon S3 prefix list** | All S3 IPs for your region            |
+| **EC2 Instance Connect**  | Used for SSH via EC2 Instance Connect |
+| **Route53 Health Checks** | Allow AWS health-check traffic        |
+| **DynamoDB prefix list**  | All DynamoDB IP ranges                |
+| **VPC Lattice**           | For service-to-service networking     
+
+If we allow the s3 in the security group this does not mean that the s3 can access the 
+Ec2 it simply means: 
+   "if my Ec2  instance tries to contact S3 ,the return traffic will be allowed "
+
+
+
+VERY IMPORTANT: AWS Services NEVER initiate connections to EC2
+
+Examples:
+
+- S3 never connects to your EC2
+- DynamoDB never connects to your EC2
+- RDS never connects to your EC2
+- SQS never connects to your EC2
+- CloudWatch never connects to your EC2
+
+Your EC2 connects outbound to them.
+
+Because Security Groups only filter INBOUND traffic coming to EC2.
+
+
+When used ??
+If you want to allow traffic from AWS service ,not from the internet 
+You do not need to manually enter IP's -> AWS manages them 
+
+
+6.Description 
+-----------------------
+A text note to remind you why the rule exits 
+Example: 
+* All SSH for admin"
+* Web traffic from public internet
+* Internal DB access only 
+This helps you understand rules later 
+
