@@ -1,0 +1,63 @@
+1.Edit the inbound rule
+--------------------------
+Inbound rules control the incoming traffic that's allowed to reach the instance 
+
+Here we can edit the exiting rule or Add a  new rule 
+Its just like add the inbound rule ,while creating  an Security Group 
+
+2.Edit the outbound rule: 
+----------------------------
+Outbound rules control the outgoing traffic that's allowed  to leave the instance 
+
+Here we can edit the existing rules or add a new rule 
+Its just like adding the outbound rule .while creating an Security group 
+
+3.Manage Tags 
+----------------------------
+Here we can add a new tag or remove or modify the existing tag
+
+4.Copy to new security Group 
+------------------------------
+A security group  acts as a virtual firewall  for your instances to control inbound and 
+boutbound traffic .To create a new security group  ,complete the field below 
+
+This is used to use the already existing SG as a base for creating a new security group 
+
+5.Manage Stale rules
+--------------------------------
+A stale security group rule happens when    your security group contains
+a rule like this 
+>> Allow inbound traffic from SG-abc123 (Security Group in another VPC)
+
+But later : 
+The VPC peering connection between the two VPC's is deleted 
+or 
+The referenced security group in the peer VPC  is deleted 
+
+Now the rule is pointing to something that no longer exists 
+That is what AWS call a Stale rule 
+
+To resolve a stale rule, either remove it from the security group, 
+or if rule is stale because the VPC peering connection was deleted, 
+create a new VPC peering connection with the same VPCs.
+
+6.Share a Security Group 
+-----------------------------------
+YOu basically saying : 
+  "I give permission to another AWS account  to use this security group in their VPC "
+This is doen using AWS RAM (Resource Access manager )
+
+7.Delete the security Group 
+-------------------------------------
+Delete security group  is  Just deleting the security group 
+
+8.VPC association 
+----------- ---------------------------
+YOu are loooking at a security group that was shared using AWS RAM , and it is not 
+yet attached to  any  of your VPC  , "Associate VPC" links it to your VPC  so you can use 
+it 
+
+
+
+
+
