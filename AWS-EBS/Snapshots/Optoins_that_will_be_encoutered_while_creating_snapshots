@@ -1,0 +1,9 @@
+Create Snapshot:
+\_Resoruce type: 
+               \_Volume     : if volume give volume ID
+               \_Instance   : if Instance give Instance Id
+\_Snapshot detail: 
+               \_Description 
+\_Tagss: 
+      \_Key: Value 
+
