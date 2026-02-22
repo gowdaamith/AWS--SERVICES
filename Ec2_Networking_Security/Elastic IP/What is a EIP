@@ -1,0 +1,65 @@
+Elastic IP 
+-------------------------
+An Elastic IP is a permanent public IP   addresss that AWS gives you so your instance can 
+always be reachable from the internet even if you stop/start or replace the instance 
+
+Normal Public IP = changes  when you stop / start the instance
+Elastic IP = never changes 
+
+Why do we need the Elastic IP 
+Imagine this scenario : 
+*YOu have a produciton web server server
+*It is reachable  at 54.23.12.5
+*You stop → start the EC2 instance
+
+Normal Public IP would change → your website breaks.
+
+But if you use an Elastic IP:
+* You stop/start EC2 → IP stays the same
+* Your website is always reachable
+
+Key Feature of the EIP 
+| Feature                                                   | Description                                            |
+| --------------------------------------------------------- | ------------------------------------------------------ |
+| **Static Public IP**                                      | Permanently assigned until you release it              |
+| **Re-mappable**                                           | Can move the IP from one instance to another instantly |
+| **One EIP free only when attached to a running instance** | You pay if unused                                      |
+| **IPv4 only**                                             | No Elastic IPs for IPv6                                
+
+When the instance fail you move the EIP ??
+>> EIP → from Instance A → to Instance B
+
+This gives:
+* High availability
+* Fast failover
+* Zero downtime
+
+Billing: 
+AWS charges for Elastic IP if:
+* It is allocated but not associated with any running instance
+* Or associated with a stopped instance
+
+So: 
+Unused EIP = Charged
+Active EIP = Free
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
