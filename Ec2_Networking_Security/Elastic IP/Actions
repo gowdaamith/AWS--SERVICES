@@ -1,0 +1,62 @@
+Actions in the elastic IP:
+
+1.View details
+--------------------------------
+\_Show all details of the Elastic  IP
+Such as : 
+* Public IP
+* Allocation ID
+* Associated instance / ENI
+* Reverse DNS
+* Transfer status
+* Tags
+
+2.Release Elastic IP address 
+--------------------------------
+This deletes the Elastic IP from your AWS account 
+
+3.Associate Elastic IP 
+---------------------------------
+This is used to attach  the Elastic IP to : 
+* an EC2 instance
+* or a Network Interface (ENI)
+* or a NAT Gateway
+This is the step where you actually start using the Elastic IP.
+
+4.Disassociate Elastic IP address
+-----------------------------------
+Remove the Elastic IP from the Ec2 /ENI 
+Ec2 will :
+* Lose public connectivity immediately
+* Stop responding to SSH/RDP if no other public IP exists
+
+5.Update revers DNS 
+This is used only if : 
+*YOu run a mail server 
+AWS lets you set a reverse DNS record (like 123.1.2.3 → mail.example.com).
+Normal users never use this.
+
+6.Enabel Tranfer 
+-------------------------------------
+Allows you to transfer this Elastic IP to another AWS account 
+
+7.Disabel transfer
+-------------------------------------
+Stops transfer pemissoin if previously enabeled
+
+8.Accept transfer 
+--------------------------------------
+This appears if another AWS account is transferring an Elastic IP to you 
+YOu must accept it to complete transfer 
+
+Summary 
+| Action                      | Meaning                                 |
+| --------------------------- | --------------------------------------- |
+| **View details**            | See all info about the Elastic IP       |
+| **Release Elastic IP**      | Delete/remove it from AWS account       |
+| **Associate Elastic IP**    | Attach the IP to an EC2/NAT/ENI         |
+| **Disassociate Elastic IP** | Remove the IP from the instance         |
+| **Update reverse DNS**      | Configure PTR DNS (mail servers)        |
+| **Enable transfers**        | Allow sending IP to another AWS account |
+| **Disable transfers**       | Stop transfer option                    |
+| **Accept transfers**        | Accept an incoming IP transfer          |
