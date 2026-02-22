@@ -1,0 +1,20 @@
+Create a volume
+\_Volume type : 
+              \_General Purpose SSD(gp3)   *           >> Most workload        default ,cost effective     
+              \_General Purpose SSD(gp2)               >> Legacy workload      IOPS depends on  volume size
+              \_Provisioned IOPS SSD(io1)              >> High performance DB  Older Version 
+              \_Provisioned IOPS SSD(io2)   *          >> Mission-Critical DB  Highest durability 
+              \_Cold HDD(src1)                         >> Big data ,streaming  Highest throughput ,not IOPS
+              \_Throughtput optimized HDD(st1)         >> Cold Storage         Cheapest
+              \_Magnetic (standard) [HDD]              >> Legacy workload      Deprecated 
+
+\_Size : What the size of the volume you need 
+\_IOPS : How much read and write operation per second
+\_ThroughPut : How much data transfered  [size] per second 
+\_Availability_Zone :  Provuide the availability zone in which you want the volume 
+\_Snapshot ID : Snapshot  ID is the backup you want to restore from 
+\_Encrypt :   Enabel this to encrypt the volume
+\_Tags: Provide the Tags 
+
+Click on create VOLUME 
+
