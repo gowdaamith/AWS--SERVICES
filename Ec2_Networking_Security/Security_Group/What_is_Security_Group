@@ -1,0 +1,62 @@
+What is a Security Group ??
+A Security group is a virtual firewall for your  Ec2 instance
+
+It controls : 
+* Inbount traffic  -> What traffic is allowed into the instance 
+* Outbound traffic  -> What traffic is allowed outside the instance
+
+It applies at the instance level ,not the subnet level
+
+Key Properties:
+-------------------------
+1.Stateful
+If incoming traffic is allowed ,the responce  traffic is automatically allowed 
+
+example : 
+IF you allow TCP 22 (SSH) inbound :
+-> Outbount reponse is automatically allowed
+-> You don't need to add any outbound rule for it 
+
+Means: 
+The inbound rule say's : 
+"Allow SSH traffic coming into the instance from my IP"
+Because security groups are stateful ,AWS automatically does this 
+"Allow the response traffic to go out of the instance back to your IP "
+
+2.Default deny : 
+A security group denies everything unless explicitly allowed 
+
+Inbound  -> Deny alll
+Outbound -> Allow all [default]
+=>> You can change rule as needed 
+
+3.Attach to Ec2 Instances 
+Each Ec2 instance must have atleast one SG
+One SG can attached to mulitple instances 
+
+4.Only allow rules (no deny rules)
+Security groups ALLOW rules only 
+There is no Deny optoin 
+If something is not allowed  -> it is blocked automatically 
+
+Quick Difference between the Security Group and NACL 
+
+| Feature         | Security Group      | NACL              |
+| --------------- | ------------------- | ----------------- |
+| Level           | Instance level      | Subnet level      |
+| Stateful        | YES                 | NO                |
+| Rules           | Only ALLOW          | ALLOW + DENY      |
+| Default inbound | DENY                | ALLOW             |
+| Used for        | Instance protection | Subnet protection |
+
+
+
+
+
+
+Outbound Rules :
+By default :
+* All outbound traffic is allowed 
+* YOu can restrict it if required 
+
+
