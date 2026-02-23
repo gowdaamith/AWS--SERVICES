@@ -1,0 +1,127 @@
+1.Attach 
+ >> Atttach this ENI to an Ec2 Instance
+
+2.Detach 
+  Remove this ENI from the Ec2 instance 
+  >> Primary ENI doesn't detach while the instance is running 
+
+3.Delete
+  Delete the ENI ccompletely 
+
+4.Manage IP addresses
+  Assign or unassigh IPv4 and IPv6 addresses to or from network interface 
+\_To assign additional public IPv4 addresses to this network interface, 
+you must allocate Elastic IP addresses and associate them with this network interfaces.
+\_Allow secondary private IPv4 addresses to be reassigned
+Allows you to reassign a private IPv4 address that is assigned to another network interface or instance to this network interface.
+
+5.Associate Elastic IP address
+  Associate an Elastic IP address  with one of the private addresses for the network interface
+
+5.Association Details:
+Network Interface detail:
+\_ID of the Network Interface detail
+\_Elastic IP address
+\_Private IPv4 address
+Allow the Elastic IP address to be reassoicated with this network  interface
+
+6.Disassociate address
+  Remove the public IP/EIP that is attached to this ENI 
+
+7.Modify Public Hostname type
+Contorl how the public DNS name is generate  [ Need a public IP ]
+Ex : ec2-18-34-12-5.ap-south-1.compute.amazonaws.com
+You can enable or disable the host name creation 
+
+8.Change termination behaviour
+  Here you can enable or disable wheather to delete the ENI when the instance is terminated 
+
+9.Change security Group 
+  Chages the security groups attached to this ENI 
+  Tightening / looseninng inbound/outbound rules 
+
+10.Change source /dest .check
+Control Ec2 source / Destination  check 
+By default ,Ec2 expects traffic only to and form itself 
+You disable this only if ENI is doing routing or forwarding 
+*NAT instance
+*Firewall applicatoin 
+*Traffic inspection instance
+
+10.Manage tage
+   Add or edit tags for identificationo  and billing 
+
+12.Manage Prefixes
+   IPv4 prefix delegation
+   The IPv4 prefixes to assign to the network interface.
+    - Do not assign
+    - Auto-assign
+    - Custom
+   IPv6 prefix delegation
+   The IPv6 prefixes to assign to the network interface.
+    - Do not assign
+    - Auto-assign
+    - Custom
+
+13.Chage the description
+   Edit the description of the ENI 
+
+14.Modify idle connection tracking timeout 
+   This related to connection tracking for stateful flows 
+  Where we can modify the :
+   TCP established timeout
+   UDP stream timeout
+   UDP timeout
+
+15.Create flow log 
+Create a VPC flow logs for this ENI only 
+Flow log track all network traffic : 
+
+
+Flow log  settings:
+\_Name 
+\_filter: The type of traffic to capture 
+        \_Accept
+        \_Reject
+        \_All
+\_Maximum aggregation interval : 
+The maximum interval of time during which a flow of packets is captured and aggregated into a flow log record.
+   \_10 minutes
+   \_1 minutes
+Destination : The destination to which to publish the flow log data.
+
+- Send to CloudWatch logs
+- Send to an S3 bucket
+- Send to Kinesis Firehose in the same account
+- Send to Kinesis Firehose in a different account
+
+Destination log group: The name of the Amazon CloudWatch log group to which the flow log is published. 
+                       A new log stream is created for each monitored network interface.
+
+Service access: VPC flow logs require permissions to create log groups and publish events in CloudWatch.
+\_Use an existing service role
+\_Create and use a new service role 
+
+IAM ROLE  NAME : If the first option is choosen 
+Service Role Name:  A new service role will be created with the necessary permissions to publish to CloudWatch logs.
+
+Log record format:
+This fields to include in the flow log record
+\_AWS default format 
+\_Custom format
+
+Additional metadata: Include additional metadata to AWS default log record format
+\_Enable or Disable the amazon ECS metadata
+
+Tags : 
+     \_Key : Value 
+
+16.Manage ENA express
+Enable or Disable ENA express 
+
+17. Manage ENA queue 
+ENA support multiple trasmit / receive queues for high-speed NIC'S
+You can : 
+Increase queues (better performance)
+Reduce queues (save CPU)
+>> High-performance EC2 instances use >8 queues.
