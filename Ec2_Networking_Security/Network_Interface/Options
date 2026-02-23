@@ -1,0 +1,93 @@
+An Elastic network interface is a logical networking component  in a VPC that represent 
+a virtual  network card 
+
+Details:
+\_Description  : A description  of your network interface 
+\_Subnet       : The subnet in which you want to  create a network interface
+\_Interface type : 
+                \_ENA  Elastic Network Adapter >> Standard high performance network interface used by most Ec2 instances
+                \_EFA Elastic Fabric Adapter with ENA  >> EFA for hardware and ENA for capabilities (used for  HPC traffic via EFA  and Normal network Traffic via ENA)
+                \_EFA only >>  only availabel on select specialized HPC or ML instances  
+
+____________________________________________________________________________________________________
+| Feature             | ENA               | EFA + ENA              | EFA-only               |
+| ------------------- | ----------------- | ---------------------- | ---------------------- |
+| Standard Networking | ✅ Yes             | ✅ Yes                  | 🟩 Yes (via EFA stack) |
+| HPC / MPI Support   | ❌ No              | ✅ Yes                  | 🟩 Yes                 |
+| Ultra Low Latency   | ❌                 | 🟩                     | 🟦 BEST                |
+| OS-bypass           | ❌                 | ✅                      | 🟩 Yes                 |
+| TCP/IP              | ✔ via ENA         | ✔ via ENA              | ✔ via EFA              |
+| Best For            | General workloads | HPC + normal workloads | Pure HPC               |
+______________________________________________________________________________________________________
+
+Private IPv4 address: The private IPv4 address to assign to the network interface 
+>> Auto-assign 
+>> Custom 
+
+Additional Setting : 
+
+IPv4  Prefix Delegation
+---------------------------
+This setting controls whether  AWS gives the ENI a block of IPv4 addresses (a prefix) ,not 
+just a single IP 
+
+options
+\_1.Do not assign 
+  * No IPv4 prefix  will be atttached 
+  * The ENI get only the normal IPv4 addresss 
+
+\_2.Auto  assign 
+  * AWS automatically gives a prefix ( like /28 -> 16 IPs )
+  * Instance can use these IP's for containers ,pods ,apps ,etc
+
+\_3.Custom 
+  * You choose your own prefix size and IP block 
+  Used mainly when :
+  *Amzon ECS ,EKS
+  *High-density networking
+  *Assigning many IP's from a single ENI 
+
+Idle Connection Tracking Timeout
+AWS tracks connection flowing through the ENI 
+if a connectoin is idle for too long  ,AWS removes it from the connection table 
+
+This prevents : 
+*Memory waste
+*Stale connection 
+*NAT exhaustion
+YOu can configure this idle timeout 
+
+TCP Established Timeout
+--------------------------------
+This is the timeout for a TCP connection that is established but idle 
+Default 432,000 = five days
+
+Meaning : 
+If a TCP connection stays open but no packets are exchanged for 5 days , AWS conenction tracking removes it 
+This avoids infinite idle TCP session 
+
+
+UDP Stream Timeout
+-------------------------------
+UDP is connnectionless 
+AWS treats a connection flow of UDP packets between two endpoints  as a UDP "stream " 
+
+default : 180 seconds (3 minute)
+Meaning : 
+If a UDP packet stop flowing for more than  3 minute ,AWS assumes the "Stream" is  finished  and remove the flow  from tracking 
+
+UDP timeout 
+-------------------------------
+This is the timeout for single or bursty UDP packets ,not continuous  streams
+Default values : 
+
+*UDP timeout  30 sec
+*UDP stream timeout 180 sec
+
+Meaning : 
+If a single UDP request / reponse  is not followed by more packets within 30 seconds ,the flow is removed 
+
+Tags:
+     \_Key : Values 
+
+
