@@ -1,0 +1,110 @@
+What is a LoadBalancer??
+A Load Balancer distributes incoming traffic across multiple EC2 instances
+so no single instance gets overloaded.
+
+AWS provides Elastic Load Balancing (ELB) which automatically handles:
+- traffic distribution
+- health checks
+- scaling
+- failover
+- security (TLS termination)
+
+Types of AWS LoadBalancer
+1.Application Load Balancers [ALB]
+Layer 7 (HTTP / HTTPS ) Load balancer 
+Best for web application and micro services
+
+Features : 
+- Path-based routing ( /api/* → API servers, /images/* → media servers )
+- Host-based routing (mobile.example.com → mobile servers)
+- Works with containers (ECS, EKS)
+- Sticky sessions
+- Redirects (HTTP → HTTPS)
+- WebSockets support
+
+A Layer 7 LB see: 
+*URL path (/login,/images/logo.png)
+*Hostname (api.example.com)
+*Headers
+*Cookies
+*Authentication 
+
+Use case: 
+* Modern web apps
+* Microservices
+* API
+* Domain /path-based routing 
+
+2.Network load Balancer  [ NLB ]
+Layer 4 (TCP / UDP ) load balancer
+Best for high performance ,ultra low latency traffic 
+
+Features : 
+Handles millions of requests per second
+Best for gaming servers, IoT, high-speed apps
+Static IP support
+Can attach Elastic IP
+Supports TCP, UDP, TLS passthrough
+
+Use Case:
+Real-time applications
+High-throughput workloads
+Low latency financial apps
+
+Layer 4 only sees : 
+* IP
+* Port
+* Protocol 
+
+
+3.Gateway Load Balancers (GWLB)
+Used for tarffic inspection and security appliances 
+
+Features : 
+Deploy firewalls, IDS/IPS, deep packet inspection devices
+Routes all VPC traffic through your security appliances
+Works by using protocols GENEVE
+
+Use cases: 
+* Advanced security architectures
+* Third-party virtual appliances (Palo Alto, Fortinet, etc.)
+
+4.Classic Load Balancers
+ Legacy  load Balancers (Layer 4 + 7)
+ Not recommended for new deployment 
+
+Use cases: 
+Old applications still running on EC2-Classic
+Only for backward compatibility
+
+How the LaodBalancers Work Internally??
+1.Client sends the traffic
+2.ELB receives request 
+3.Perform health check on registered instances
+4.Sends traffic only to healthy nodes 
+5.If an instance fails -> Automatically  removed
+6.Auto scaling can add new instances  -> LB starts routing traffic to them 
+
+What a Load Balancer  actually replaces??
+You don't need: 
+
+Multiple public IPs
+NAT or firewall rules to every EC2
+Manually managing traffic distribution
+SSL certificates on every server
+
+Important concepts
+* Sticky Sesssion 
+>> Keeps the same user connected to the same instance
+* Cross Zone load balancing
+>> Distribute traffic evenly across Az's
+* SSL termination 
+>> Loadbalancers  handels HTTPS encryption -> reduce Ec2 Load 
+
+| Load Balancer | Layer       | Use Case                      |
+| ------------- | ----------- | ----------------------------- |
+| **ALB**       | 7           | Web apps, APIs, Microservices |
+| **NLB**       | 4           | Extreme performance, TCP/UDP  |
+| **GWLB**      | 3? + GENEVE | Security appliances           |
+| **CLB**       | 4 + 7       | Legacy only                   |
+
