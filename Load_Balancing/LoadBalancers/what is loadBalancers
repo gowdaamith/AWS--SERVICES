@@ -108,3 +108,18 @@ Important concepts
 | **GWLB**      | 3? + GENEVE | Security appliances           |
 | **CLB**       | 4 + 7       | Legacy only                   |
 
+Simplest Explanation:
+NLB: 
+I don't care what's inside the request 
+Just send TCP/UDP packets  FAST
+
+ALB:
+I understand URL's ,Cookies,Headers
+I will intelligently route your HTTP traffic
+
+GWLB:
+All your VPC traffic  will first go through your firewaall 
+
+CLB:
+I am old .Please don't use me 
+
