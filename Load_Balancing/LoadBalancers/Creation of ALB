@@ -1,0 +1,76 @@
+Create Applicatoin Load Balancer
+\_LoadBalancer Name : Must be unique  and cannnot be created once the loadBalancer is created 
+\_Scheme            : 
+                     \_Internet facing : 
+                                        Serves internet-facing traffic.
+                                        Has public IP addresses.
+                                        DNS name resolves to public IPs.
+                                        Requires a public subnet.
+                      \_Internal : 
+                                   Serves Internal traffic
+                                   Has private IP address
+                                   DNS name resolve to the private IP
+                                   Compatible with the IPv4 and Dualstack IP address types
+
+Load Balancers IP address type: 
+                               \_IPv4
+                               \_DualStack : Include IPv4 and IPv6 addresses 
+
+
+Network Mapping: The load balancer routes traffic to targets in the selected subnets, and in accordance with your IP address settings.
+
+LoadBalancer is specific to the VPC  and the  targets of the Loadbalancer must be hosted within 
+this VPC   unless routing to Lambda or on-premises targets  or if using VPC peering  
+\_VPC  ID: 
+\_IP Pool : You can optionally choose to configure an IPAM pool as the preferred source for your load balancers IP addresses.
+          Create or view Pools in the Amazon VPC IP Address Manager console .
+\_Availability Zones and Subnets :Select at least two Availability Zones and a subnet for each zone. 
+                                A load balancer node will be placed in each selected zone and will 
+                                automatically scale in response to traffic. The load balancer routes 
+                                traffic to targets in the selected Availability Zones only.
+\_Security Group: A security group is a set of firewall rules that control the traffic to your load balancer.
+                  Select an existing security group, or you can create a new security group
+\_Listeners and routing: A listener is a process that checks for connection requests using the port and protocol you configure. 
+                         The rules that you define for a listener determine how the load balancer routes requests to its
+                         registered targets.
+         \_Protocol 
+         \_Port 
+       \_Default action : 
+                        \_Forward to target groups  
+                                                  \_Select the target group and turn on target sticky ness 
+                        
+                        \_Redirect to URL
+                                         \_URL parts 
+                                                    \_Protocol
+                                                    \_Port
+                                                    \_Custom host ,path ,querry  
+                                         \_ Full URL
+                                                    \_Enter the full URL
+                                                    \_Status code
+                        \_Return fixed response
+                                               \_Response Code : 503
+                                               \_ Content type : text/plain
+                                               \_ Response body : 
+
+Additional  AWS service integration for the service optimization : 
+\_AWS web application Firewall 
+                              \_Auto created pre-defined WAF
+                                       \_Rule Action: The rule action tells AWS WAF what to do with a request when it matches the criteria defined in the rule. Either Block or Count
+                                       \_Resource Name: 
+                                                      \_Auto generated :Names the WAF resource as “CreatedByALB-” followed by the load balancer name.
+                                                       \_Custom 
+                                       \_Resource-level DDoS protection - new
+                                          Protect critical resources from DDoS attacks using AWS managed threat list
+                                       \_Protection against low reputatoin sources 
+                                                                                  \_Active under DDos : AWS will ONLY block low-reputation IPs if a DDoS attack is happening on your resource.
+                                                                                  \_Always ON         : AWS will always block low-reputation IPs, even when no attack is happening.
+Use an Existing WAF configuration : Choose from your existing WAF configurations if your security needs are the same for this load balancer.
+                                  \_Choose a Web ACL 
+
+
+AWS Global Accelerator :  Optimizes : Performance and Availability
+   it gives you two global static IP's that act as a fixed entry point for user  worldwide 
+   traffic enters the AWS  global network as early as possible  and is routed to your closest  healthy region or applicatoin endpoint
+
+
+Review and Create 
