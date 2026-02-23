@@ -1,0 +1,69 @@
+1.Edit IP address type 
+  Choose whether the LB uses: 
+  * IPv4
+     or 
+  * Dual - Stack  (IPv4 or IPv6)
+This decides  what type of IP the loadBalancer  listeners will accept the traffic from 
+
+Example : If your  app must support IPv6 clients enabel  dual -stack 
+
+2.Edit Subnet 
+A load Balancer atleast require two subnets : 
+This option allow you to 
+* Add more subnets 
+* Remove subents 
+
+3.Manage Instance (For CLB)
+You directly register with the LB
+
+For ALB / NLB 
+You don't see this option because they  use target group 
+This actoin
+
+* Attach EC2 instances to the LB
+* Remove instances
+* See which instance is healthy/unhealthy lets you to attach :
+
+4. Edit health Check settings
+   Health checks decide whether the LB  Should send the traffic to the target 
+   YOu can modify : 
+   * Path 
+   * Port
+   * Interval
+   * Timeout 
+   *Healhty / Unhealthy threshold 
+
+5.Manage Listeners
+  Listeners define protocol  + port on which LB accept traffic
+Here you can :
+- Add/delete listeners
+- Edit rules
+- Add SSL certificates (HTTPS)
+- Configure forwarding to target groups
+
+6.Edit the security Group (ALB onLY)
+ALB uses SG because it works at Layer 7
+
+Here you can : 
+- Attach new security groups
+- Remove old security groups
+- Allow traffic (80/443)
+- Restrict access
+
+Example: 
+Block public traffic and allow only CloudFront.
+
+7.Edit the load Balancer attribute
+  Attribute control the LB behaviour 
+  Common attribute include : 
+ALB : 
+*Access Log 
+*Connectoin draining
+*Idle timeout
+*Cross-Zone load balancing 
+
+NLB: 
+*Cross Zone load balancing
+* Deletion protectio n
+
+
