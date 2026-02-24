@@ -63,18 +63,136 @@ CLB	         Does NOT use target groups
 
 
 
+___________________________________________________________________________________________
+
+ Creating a Target Group 
+
+\_Target Type : 
+              \_ Instances
+              \_IP addresss
+              \_Lambda fuction 
+              \_ Appplication load balancer 
+
+\_Target Group Name : 
+\_Protocol          :  Protocol  for communication  between the loadbalancer and targets
+\_Port              :  Port where the targets receive the traffic ffrom  ,can be overridden for individual  targets during registration 
+\_IP address type   :  Only  targets with the indicated target type can be registered to this target group 
+                    \_IPv4
+                    \_IPv6
+\_VPC               : Select the VPC with the instances that you want to include in the target group. 
+                      Only VPCs that support the IP address type selected above are available in this list.
+\_Protocol Version  : 
+                    \_HTTP1
+                    \_HTTP2
+                    \_gRPC
 
 
+Health Checks: The associated load balancer periodically sends requests, per the settings below, 
+              to the registered targets to test their status.
+\_Health check protocol
+\_Health check path : Use the default path of "/" to perform health checks on the root, or specify a custom path if preferred.
+
+ Advanced Health checking : 
+\_Health Check port : The port the load balancer uses when performing health checks on targets. By default, 
+                    the health check port is the same as the target group's traffic port. However,
+                    you can specify a different port as an override.
+                   \_Traffic port
+                   \_Override 
+\_Healthy threshold 
+  \_The number of consecutive health checks successes required before considering an unhealthy target healthy:
+\_Unhealthy threshold 
+   \_The number of consecutive health check failures required before considering a target unhealthy.
+\_TimeOUT
+   \_The amount of time, in seconds, during which no response means a failed health check.
+\_Interval 
+  \_The approximate amount of time between health checks of an individual target 
+\_Success codes
+  \_The HTTP codes to use when checking for a successful response from a target.
+    You can specify multiple values (for example, "200,202") 
+    or a range of values (for example, "200-299").
+
+Target Optimizer: Use a target control port when the target has a strict concurrency  limit
+
+Target control port : 
+The port on whihc the target communicate  its capacity .This value cann't be modified after the target  group creation
+\_Enter the port 
+
+Tags :
+     \_Key : Value 
+
+Register the Targets : 
+Review and Create the target Group 
 
 
+-------------------------------------------------------------------------------------------
+If Target type is :
+\_Lambda:  
+
+\_Enter the target Group name
+\_Enable the health check 
+\_Provide the tags 
+
+Register the target 
+\_Select the Lambda function
+\_Enter the Lambds fucntion ARN 
+\_Register a Lambda function later
+
+Review and create
+
+-----------------------------------------------------------------------------------------------
+If you choose the IP addresses
+\_Target Group name
+\_Protocol
+\_Port 
+\_IP address type 
+\_VPC
+\_Health checks 
+\_Tags
 
 
+Register the  targets - 
+\_Step 1: choose the network
+  You can add IP addresses from the VPC selected for your target group or from outside the VPC.
+  Note that you can assemble a mix of targets from multiple network sources by returning to this
+  step and choosing another network.
+\_Step 2: Specify IP's and define ports
+  You can manually enter IP addresses from the selected network.
 
+Enter an IPv4 address form  VPC subnet: 
+ >> YOu an add up to 4 more IP addresses and specify the port where these IP's will be listneing 
 
+Review and create 
 
+-------------------------------------------------------------------------------------------------------
+Application LoadBalancer: 
+\_Target group name
+\_Protocol
+\_Port 
+\_VPC 
 
+Health Checks
+\_Health check Port
+\_Health check path 
+\_YOu can configure the advance setting 
 
+Tags: 
+    \_Key : value 
 
+Register the Application LoadBalancer : You can specify application load Balancer  as the target
+\_Register now 
+\_Register later
 
+Port : The application Loadbalancer  target will receive the traffic on this port 
+       and must have a listener on the same port
+ Application Loadbalancer: Select the applicatoin loadBalancer: 
+
+Review and create 
+
+_________________________________________________________________________________________________
+Actions : 
+Delete : Used to delete the target group 
+Register targets : Used to register the targets for the selected target group 
+Edit the health check setting : Modify the setting of the health check according to your need
+Manage the tags : Edit the tags 
 
 
