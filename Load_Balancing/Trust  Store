@@ -1,0 +1,165 @@
+What is a Trust Store in AWS ???
+A trust Store is a collection of trusted certificates  that a load balancer uses to 
+verify client certificate during mutual TLS (mTLs)
+
+It is used by the :
+- Application Load Balancer
+- Network Load Balancer
+
+TLS = Trasport layer security 
+mTLS  = both the client and server authenticate each other using certificate
+
+If a client presents  a certificate  signed by a CA that is NOT in the trust store  -> the load
+balancer rejects the connection 
+
+2.Where the trust store is stored ??
+AWS allows storing trust store content in 
+* AWS secret manager
+* AWS certificate  manager private certification authority 
+
+And the trust store itself is managed under 
+>> Ec2 console -> Load Balancing -> Trust stores 
+
+This section exitss specially because trust stores are used only  by load balancers
+
+3.Why is a Trust Store used??
+  A trust store is required for mutual TLS
+mTLS provides
+* Client identity  verification 
+* Strong security for internal traffic
+* Zero-trust validation  at the Edge  ( Load Balancer layer )
+
+Without a trust store ,the load balancer cannot verify client  identity and mTLS  will not work 
+
+
+4. HOw a Trust store works in mTLS??
+
+1.Client connects to loadBalancer
+2.LoadBalancer asks for cliend certificate
+3.Clinet presents certificate
+4.Load Balancer  verifies the certifiate using :
+  \_Trusted CA certificate in the trust store
+  \_Certificate expiration 
+  \_Revocatoin status 
+5.If valid -> The request forwarded to target group 
+6.If invalid -> connection rejected immediately 
+
+The backend appliacation never receives untrusted traffic 
+
+How the Trust store is associated with the loadBalancer??
+This is the most important part
+
+Trust store is not directly attached to the : 
+                                            \_LoadBalancer 
+                                            \_Target group 
+It is attached  inside the listener rules throgh the authentication 
+
+Full flow 
+1.Create  trust store 
+2.Open the load balancer  -> Listeners (HTTPS LISTENER )
+3.ADD rule: 
+          \_Authenticate using mTLS  : here select the  trust store instead of passthrough in which the backend verify the  the certificate
+Inside this rule AWS asks you to select :
+The trust store 
+
+Advance mTLS  listeners setting 
+\_Do not allow expired client certificates - recommended
+\_Allow expired client certificates
+
+Advertise trust store CA subject names :Decide whether the listener will advertise the Certificate Authorities (CAs) subject names trusted by its trust store.
+\_Either Off [default ] or On 
+
+Then save it 
+
+
+Example: 
+
+🎯 Scenario
+Company has an internal API running behind an ALB.
+Only approved internal apps should access it.
+
+🔹 Step 1: Security team creates a CA using
+AWS Certificate Manager Private Certificate Authority
+
+They issue client certificates to internal applications.
+
+🔹 Step 2: They upload the CA certificate bundle into
+AWS Secrets Manager
+and create a Trust Store under Load Balancing.
+
+🔹 Step 3: API team configures ALB Listener:
+HTTPS : 443
+
+Rule 1:
+Authenticate with mTLS
+
+Select Trust Store
+
+Require valid client certificate
+
+Rule 2:
+Forward to target group
+
+🔹 Step 4: Client Application Calls API
+Client presents certificate issued by the internal CA.
+
+🔹 Result:
+ALB validates certificate using Trust Store
+
+If trusted → request forwarded
+
+If not trusted → connection rejected at ALB itself
+
+Backend remains fully protected
+
+Another Exaapmle
+-----------------------------------
+Ec2 Instance wants to make an HTTPS  requests to an ALB that require 
+>> Client Certification Mandatory 
+
+To succeed , the Ec2 must : 
+1.Have a client certificate
+2.Have the private key 
+3.Configure its HTTP client to use both 
+
+The ALB will validate  the Ec2's certificate using the trust store 
+
+
+Preparing the client(Ec2)
+-------------------------------------
+Your Ec2 instances needs 
+Client certificate
+Client private key 
+Certificate chain (optional)
+
+These certifications are usually issued by : 
+*Your internal ACM private  CA
+*A corporate  CA
+*Any CA  trusted by the ALB's trust store 
+
+Store them securely on the Ec2 instance (/etc/pki/clientcerts/)
+
+Ec2 Sends the client  Certificate (Automatically during TLS)
+------------------------------------------------------------
+Ec2 does not manually  send the certificate  through an API call.
+The certificate  is sent as part of the TLS handshake when the ALB asks for it 
+
+This is done by configuring the HTTP client being used (Curl,Python,Java,Node ,Go,etc)
+
+________________________________________________________________________________________
+Create  a Trust Store 
+A trust store contains certificates and certificate authorities that you trust to identify clients. Certificate revocation lists can be added to trust stores.
+
+Trust store Configuration : 
+\_Trust store name
+\_Certificate authority bundle : Choose the location where your certificate authority (CA) PEM formatted file is currently stored. The ELB service will get the file once. This URI isn't saved in the trust store configuration. Create S3 bucket 
+\_Revocatoin : Certificate revocation lists (CRLs) contain certificates that you don't want to connect to your network, typically for security reasons.
+\_Resource sharing : Elastic Load Balancing integrates with AWS Resource Access Manager (AWS RAM) to enable resource sharing across AWS accounts or through AWS organizations.
+                   \_Resource shares: Principals included in the selected resource shares will be able to create associations between this trust store and their load balancers
+Add the tags and Create it 
+
+Here in the resource sharing if you Allow  the resource shares ,You are allowing those accouts to be used  or associated with their load Balancers
+They can own the trust store 
+They can use it with their ALB
+They cannot edit it 
+They cannot delete it 
