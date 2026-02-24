@@ -1,28 +1,80 @@
-Target group : 
-A target group in AWS is a collection of targets (Ec2 Instance , IP's ,Lambda, containers )
-that load balancers sends traffic to 
+Target Group: 
 
-Target group can be: 
-* Ec2 Instances
-* IP addresses 
-* Lambda functions
-* ECS tasks (containers)
-* ALB 
+What is a Target Group ??
+A target group (TG) is a logical group where your load balancer forwards traffic 
 
-Why do we need target Groups??
-Because the load balancer itself doesn't talk directly to Ec2 
-it sends traffic to a target group and the target group sends to the registered targets 
+Target group can be : 
+*Ec2 Instances
+*IP addresses
+*Lambda funtions 
+*ECS tasks (Containers) 
+*ALB (for NLB and ALB chaining)
 
-ex: 
+Why do we need Target Group :??
+Because the load balancers itself does NOT talk directly to Ec2 
+It sends the traffic to a target group and the target group sends  to the registered targets 
+
+Example: 
 ALB  →  Target Group  →  EC2 instances
 
-What does a target Group Contain??
-A target group contains : 
+What target group contains ??
 
-1.Registered targets  
-2.Health check setting 
-3.Target type   such as Instance type ,  IP , Lambds , ALB 
+A target group contains: 
 
-wHY TARGET GROP are imp : 
-Because they allow to:
-   Use multiple taret greoup with one ALb 
+1.Registered targets
+EX: 
+*Ec2 instances  
+*IP 
+*Lambda functions
+*ECS tasks
+
+2.Health checks settings 
+  Each TG has its own health check 
+  LB uses it to check wheather the targets are healthy or not 
+
+3.Target type 
+  Target group  can be  any of these types: 
+Instances
+IP
+Lambda
+ALB
+
+   
+Why Target Grooup are powerful :???
+----------------------------------------
+Because they allow you to: 
+-- Use muliple targets groups with One ALB
+
+Exmple: 
+- /api/* -> API target group 
+- /app/* -> Web App target group 
+- /image/* -> Image target group 
+
+-- Do Blue green Deployment 
+-- Auto Scaling Integration 
+
+Target groups are different for ALB VS NLB 
+
+
+Load Balancer	   Target Types
+ALB           	Instance, IP, Lambda
+NLB	         Instance, IP, ALB
+CLB	         Does NOT use target groups
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
