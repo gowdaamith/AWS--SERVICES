@@ -1,0 +1,47 @@
+What is a Auto Scaling Group ??
+An autoscaling group is an AWS feature that automatically creates  ,deletes  or replace  
+Ec2 instances  based on demand and health 
+
+ASG = Group  of Ec2 instances that scale automatically 
+
+It ensure : 
+* There are Right number of Ec2 Instances
+* Healthy Ec2 Instances
+* Instances are created consistently according to the need 
+
+
+Why Auto Scaling Group Exitss??
+Because traffic changes
+*Monitoring : Low traffic
+*Afternoon : High traffic
+*Night : Low traffic
+
+Instead of paying for Instance 24/7 we use ASG ,which adjust the  number Instances automatically 
+
+Key compnents of the ASG:
+1.Launch Template 
+2.Desired Capacity 
+3.Minimum Capacity 
+4.Maximum Capacity 
+5.Scaling Policies
+
+Simple summary : 
+
+| Feature                | Meaning                              |
+| ---------------------- | ------------------------------------ |
+| **Auto Scaling Group** | Automatically manages EC2 fleet      |
+| **Self-healing**       | Replaces unhealthy instances         |
+| **Scaling up**         | Add more EC2s when traffic increases |
+| **Scaling down**       | Remove EC2s when traffic decreases   |
+| **Launch Template**    | Blueprint for every new instance     |
+
+
+
+ASG with LG
+- ASG creates EC2 instances
+- Load Balancer distributes traffic to them
+- When ASG scales up/down, LB automatically updates targets
+
+Perfect combo for:
+Web apps,APIs,SaaS,Microservices
+
