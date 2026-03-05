@@ -1,0 +1,66 @@
+A VPC  is your own private network inside Amazon Web Service wher you can lauch resources like :
+*Ec2 instances
+*Databases
+*LoadBalancers
+*Containers
+It works like a private data centre network in the cloud 
+
+What you control inside the a VPC ??
+Inside the VPC you define:
+
+
+1.IP address range 
+Ex:  10.0.0.0/16
+This decides how many internal IP's your network can have 
+
+2.Subnets 
+  YOu divide the VPC into smaller network 
+
+Ex: 
+10.0.1.0/24 -> Public subnet
+10.0.2.0/24 -> Private subnet
+
+3.Routing 
+  Using the route table you can decide where the traffic goes  
+  Example: 0.0.0.0/0  -> Internet gateway 
+
+4.Security 
+  Control access usinG
+    *Security Groups
+    * Network ACLs
+
+
+Why VPC is important:
+Because it gives you: 
+    *Isolation                 (Other AWS user cannot access your network)
+    *Security 
+    *Full network control
+    *Custom IP ranges
+    *Public and private architecture 
+----------------------------------------------------------------------------------------
+
+
+Creating a VPC 
+
+VPC settings: 
+    \_VPC ONLY 
+    \_VPC and MORE 
+                  \_Enter the name 
+                  \_IPv4 CIDR block   - tell the starting and the size of the IP 
+                  \_IPv6 CIDR block   - it you want IPv6 block
+                  \_Tenancy           - Default
+                  \_Encryption        - Options are NOne or Monitor Mode (  visibility into encryption status without blocking traffic) or Enfore (Prevents unencrypted traffic )
+                  \_Number_of_AZ      - Specify the number of availability zones you want  [ you can also customize this optoins by  selecting other availability zones rather than default on e]
+                  \_Nubmer_of_Public and private subnets - Specify the number of public and private subnets you want
+                  \_NAT gateway        - NAT  gateway allows private resources to access the itnernet from any availability zone 
+                                         within a VPC , providing a single managed internet exit point for the entire region 
+                                         Here we have three Option : 
+                                         \_None - No NAT GATEWAY 
+                                         \_Regional-New - Multi AZ NAT gateway ,eleminate the need for separate NAT gateway across availability zone 
+                                         \_Zonal        - if you choose the Zonal you can place the NAT gateway in 1 availability zone or 1 per availability zone 
+                 \_VPC endpoints - Endpoints can help reduce NAT gateway charges an improve security by accessign s3 direclty 
+                                    from the VPC .BY default  ,full access policy is used you can customize  this policy at any   
+                 \_Enable DNS hostname   ->  This allows AWS to assing DNS names to your instance 
+                 \_Enable DNS resolution  -> This allows resources inside the VPC to resolve domain names to IP address usinhg the AWS DNS server 
+
+ CREATE VPC 
