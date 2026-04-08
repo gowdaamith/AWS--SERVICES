@@ -20,9 +20,9 @@ Instead of paying for Instance 24/7 we use ASG ,which adjust the  number Instanc
 
 Key compnents of the ASG:
 1.Launch Template 
-2.Desired Capacity 
-3.Minimum Capacity 
-4.Maximum Capacity 
+2.Desired Capacity -> The number of instances you want running right now .AWS will try to maintain this number
+3.Minimum Capacity -> The lowest number of instances  allowed .ASG will not go below it ensuring the app will always be availabel
+4.Maximum Capacity -> The highest number of instances allowed .Prevents over-scaling and high costs
 5.Scaling Policies
 
 Simple summary : 
