@@ -1,5 +1,5 @@
 What is an ENI ?
-An ENI is a logical network component in a VPC that represents : 
+An elastic network interface is a logical networking componenet in a VPC that represents a virtual network card: 
 - Private IPv4 address
 - Public IPv4 (optional)
 - One or more IPv6 addresses
@@ -115,6 +115,28 @@ Same MAC (important for licensing)
 | **Auto-assigned Public IP** | ❌ No            | ❌ No (deleted on detach) |
 
 
+__________________________________________________________________________________________________________
+When you launch an Amazon Ec2 instance :
+* AWS automatically creates one Elastic network interface (ENI)
+*This is called as the primary network interface (eth0)
+* It : 
+      - Get a private ip
+      - Connects your instance to a VPC
+      - Cannot be detached
+
+Then we attach the additinal ENI's because?
+- Multi-Network setup 
+  Attach multiple ENI's from different subnets
+  Usefull in : 
+     * Security separation (frontend and backend traffic)
+     * Multi tire architecutre
+
+- High availability / failover
+  You can move an ENI from one Ec2 instance to another 
+  Ex:
+  * Instance A fails 
+  * Attach the ENI to Instance B
+  * Same IP -> Minimal downtime
 
 
 
