@@ -1,0 +1,19 @@
+AWS EC2 KEY PAIR 
+
+In Amazon Ec2 , a key pair  is used to securely connect to your server(instances)  
+
+It replaces password
+It consits of: 
+* Public  Key -> stored in AWS (on your Ec2 instance)
+* Private  key -> downloaded by you (.pem file)
+
+How it works:
+  When you try to connect 
+  1. YOu use your private key(.pem file)
+  2. AWS checks it with the public key on the server
+  3. If it matches - access granted 
+
+We use this because?
+  AWS disables password login by default because:
+   * password can be hacked or cracked using the brute force method 
+   * Key pair are much more secure 
